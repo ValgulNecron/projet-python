@@ -1,12 +1,12 @@
 use std::error::Error;
 use sqlx::SqlitePool;
-
+const DATABASE_FILE: &str = "./db/data.db";
 async fn get_pool() -> SqlitePool {
-    SqlitePool::connect("./data.db").await.unwrap()
+    SqlitePool::connect(DATABASE_FILE).await.unwrap()
 }
 
 pub async fn create_database_and_database_file() {
-    let path = "./data.db";
+    let path = DATABASE_FILE;
     if !std::path::Path::new(path).exists() {
         std::fs::File::create(path).unwrap();
     }
