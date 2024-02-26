@@ -14,6 +14,7 @@ COPY ./server/Cargo.toml ./Cargo.toml
 
 RUN cargo build --release
 RUN rm src/*.rs
+COPY ./server/proto ./proto
 
 COPY ./server/src ./src
 
