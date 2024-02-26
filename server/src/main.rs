@@ -88,7 +88,7 @@ impl Account for AccountService {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = "0.0.0.0:3333".parse().unwrap();
+    let addr = "0.0.0.0:8000".parse().unwrap();
     let account_service = AccountService::default();
 
     let service = tonic_reflection::server::Builder::configure()
