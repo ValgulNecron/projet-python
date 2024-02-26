@@ -17,7 +17,7 @@ RUN rm src/*.rs
 
 COPY ./server/src ./src
 
-RUN rm ./target/release/deps/kasuki*
+RUN rm ./target/release/deps/server*
 RUN cargo build --release
 
 FROM debian:trixie-slim AS server
@@ -33,6 +33,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /server/target/release/kasuki/ /kasuki/
+COPY --from=builder /server/target/release/server/ /server/
 
 CMD ["./server"]
