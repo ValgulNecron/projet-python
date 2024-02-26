@@ -9,6 +9,7 @@ use tonic::{Request, Response, Status};
 use crate::proto::{DeleteAccountRequest, DeleteAccountResponse, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
 use crate::sqlite::db::{create_account, get_account};
 use base64::{engine::general_purpose, Engine as _};
+use sqlx::Row;
 use tonic::transport::Server;
 
 mod proto {
@@ -61,7 +62,7 @@ impl Account for AccountService {
     ) -> Result<Response<proto::GetAccountResponse>, Status> {
         println!("Got a request: {:?}", request);
         let data = request.into_inner();
-        let row = get_account(data.id).await;
+        let row = get_account(data.id).await.unwrap();
         let response = proto::GetAccountResponse {
             id: row.get(0),
             email: row.get(1),
