@@ -7,7 +7,7 @@ use uuid::Uuid;
 use rand::{random, Rng};
 use tonic::{Request, Response, Status};
 use crate::proto::{DeleteAccountRequest, DeleteAccountResponse, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
-use crate::sqlite::db::{create_account, get_account};
+use crate::sqlite::db::{create_account, create_database_and_database_file, get_account};
 use base64::{engine::general_purpose, Engine as _};
 use sqlx::Row;
 use tonic::transport::Server;
@@ -88,7 +88,8 @@ impl Account for AccountService {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = "0.0.0.0:8000".parse().unwrap();
+    create_database_and_database_file().await;
+    let addr = "0.0.0.0:3333".parse().unwrap();
     let account_service = AccountService::default();
 
     let service = tonic_reflection::server::Builder::configure()
