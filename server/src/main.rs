@@ -9,12 +9,13 @@ use uuid::Uuid;
 use rand::{random};
 use tonic::{Request, Response, Status};
 use crate::proto::{DeleteAccountRequest, DeleteAccountResponse, GetAccountRequest, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
-use crate::sqlite::db::{create_account, create_database_and_database_file, delete_account, get_account, get_account_by_mail, get_account_with_password, update_account};
+use crate::sqlite::db::{create_account, create_database_and_database_file, delete_account, get_account, get_account_by_mail, update_account};
 use base64::{engine::general_purpose, Engine as _};
 use sqlx::Row;
-use tonic::body::BoxBody;
-use tonic::service::Interceptor;
+use tokio::sync::RwLock;
 use tonic::transport::Server;
+
+type AccountToken = Arc<RwLock<HashMap<String, String>>>;
 
 mod proto {
     tonic::include_proto!("account");
@@ -23,8 +24,8 @@ mod proto {
         tonic::include_file_descriptor_set!("account_descriptor");
 }
 
-fn check_token(token: &str, id: &str, users_token: &HashMap<String, String>) -> bool {
-    match users_token.get(id) {
+async fn check_token(token: &str, id: &str, users_token: &AccountToken) -> bool {
+    match users_token.read().await.get(id) {
         Some(t) => t == token,
         None => false,
     }
@@ -32,7 +33,16 @@ fn check_token(token: &str, id: &str, users_token: &HashMap<String, String>) -> 
 
 #[derive(Debug, Default)]
 pub struct AccountService {
-    users_token: HashMap<String, String>,
+    users_token: AccountToken,
+}
+
+impl AccountService {
+    pub async fn add_token(&self, id: String, token: String) {
+     let mut users_token = self.users_token.write().await;
+        users_token.insert(id, token);
+
+    }
+
 }
 
 fn hash_password(password: &[u8], salt: &[u8]) -> String {
@@ -51,9 +61,10 @@ fn hash_password(password: &[u8], salt: &[u8]) -> String {
 
 fn verify_password(password: &[u8], hash: &str) -> bool {
     let parts: Vec<&str> = hash.split('$').collect();
+    let saved_hash = parts[3];
     let salt = general_purpose::STANDARD.decode(parts[2].as_bytes()).unwrap();
     let hash = hash_password(password, salt.as_ref());
-    hash == hash
+    hash == saved_hash
 }
 
 #[tonic::async_trait]
@@ -80,10 +91,10 @@ impl Account for AccountService {
 
     async fn get_account(
         &self,
-        request: Request<proto::GetAccountRequest>,
+        request: Request<GetAccountRequest>,
     ) -> Result<Response<proto::GetAccountResponse>, Status> {
         let data = request.into_inner();
-        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token) {
+        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
         }
         let row = get_account(data.id).await.unwrap();
@@ -99,7 +110,7 @@ impl Account for AccountService {
 
     async fn update_account(&self, request: Request<UpdateAccountRequest>) -> Result<Response<UpdateAccountResponse>, Status> {
         let data = request.into_inner();
-        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token) {
+        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
         }
         let id = data.id.clone();
@@ -116,10 +127,12 @@ impl Account for AccountService {
 
     async fn delete_account(&self, request: Request<DeleteAccountRequest>) -> Result<Response<DeleteAccountResponse>, Status> {
         let data = request.into_inner();
-        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token) {
+        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
         }
+        let id = data.id.clone();
         delete_account(data.id).await;
+
         let response = DeleteAccountResponse {
             id,
             deleted: true,
@@ -127,7 +140,7 @@ impl Account for AccountService {
         Ok(Response::new(response))
     }
 
-    async fn login(&mut self, request: Request<LoginRequest>) -> Result<Response<LoginResponse>, Status> {
+    async fn login(&self, request: Request<LoginRequest>) -> Result<Response<LoginResponse>, Status> {
         let data = request.into_inner();
         let row = match get_account_by_mail(data.email).await {
             Some(row) => row,
@@ -141,7 +154,7 @@ impl Account for AccountService {
         }
 
         let token = Uuid::new_v4().to_string();
-        self.users_token.insert(id.clone(), token.clone());
+        self.add_token(id.clone(), token.clone()).await;
         let response = LoginResponse {
             id,
             logged: true,
@@ -156,7 +169,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Server running");
     create_database_and_database_file().await;
     let addr = "0.0.0.0:3333".parse().unwrap();
-    let account_service = AccountService::default();
+    let account_token = AccountToken::default();
+
+    let account_service = AccountService {
+        users_token: account_token.clone(),
+    };
 
     let service = tonic_reflection::server::Builder::configure()
         .register_encoded_file_descriptor_set(proto::FILE_DESCRIPTOR_SET)
