@@ -42,6 +42,16 @@ pub async fn get_account(id: String) -> Option<sqlx::sqlite::SqliteRow> {
         .unwrap()
 }
 
+pub async fn get_account_with_password(id: String) -> Option<sqlx::sqlite::SqliteRow> {
+    let pool = get_pool().await;
+
+    sqlx::query("SELECT id, email, username, created_at, updated_at, password FROM account WHERE id = ?")
+        .bind(id)
+        .fetch_optional(&pool)
+        .await
+        .unwrap()
+}
+
 pub async fn update_account(id: String, email: String, password: String, username: String) {
     let pool = get_pool().await;
     sqlx::query("UPDATE account SET email = ?, password = ?, username = ?, updated_at = ? WHERE id = ?")
@@ -62,4 +72,13 @@ pub async fn delete_account(id: String) {
         .execute(&pool)
         .await
         .unwrap();
+}
+
+pub async fn get_account_by_mail(email: String) -> Option<sqlx::sqlite::SqliteRow> {
+    let pool = get_pool().await;
+    sqlx::query("SELECT id, email, username, password FROM account WHERE email = ?")
+        .bind(email)
+        .fetch_optional(&pool)
+        .await
+        .unwrap()
 }

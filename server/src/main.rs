@@ -1,15 +1,19 @@
 mod sqlite;
 
+use std::collections::HashMap;
 use std::num::NonZeroU32;
+use std::sync::Arc;
 use ring::pbkdf2;
 use proto::account_server::{Account, AccountServer};
 use uuid::Uuid;
 use rand::{random};
 use tonic::{Request, Response, Status};
-use crate::proto::{DeleteAccountRequest, DeleteAccountResponse, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
-use crate::sqlite::db::{create_account, create_database_and_database_file, get_account};
+use crate::proto::{DeleteAccountRequest, DeleteAccountResponse, GetAccountRequest, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
+use crate::sqlite::db::{create_account, create_database_and_database_file, delete_account, get_account, get_account_by_mail, get_account_with_password, update_account};
 use base64::{engine::general_purpose, Engine as _};
 use sqlx::Row;
+use tonic::body::BoxBody;
+use tonic::service::Interceptor;
 use tonic::transport::Server;
 
 mod proto {
@@ -19,8 +23,17 @@ mod proto {
         tonic::include_file_descriptor_set!("account_descriptor");
 }
 
+fn check_token(token: &str, id: &str, users_token: &HashMap<String, String>) -> bool {
+    match users_token.get(id) {
+        Some(t) => t == token,
+        None => false,
+    }
+}
+
 #[derive(Debug, Default)]
-pub struct AccountService {}
+pub struct AccountService {
+    users_token: HashMap<String, String>,
+}
 
 fn hash_password(password: &[u8], salt: &[u8]) -> String {
     let mut output = [0u8;  1024]; // Example output size
@@ -31,7 +44,16 @@ fn hash_password(password: &[u8], salt: &[u8]) -> String {
         password,
         &mut output,
     );
-    general_purpose::STANDARD.encode(output)
+    let out = general_purpose::STANDARD.encode(output);
+    let salt = general_purpose::STANDARD.encode(salt);
+    format!("pbkdf2_sha512${}${}${}", 100_000, salt, out)
+}
+
+fn verify_password(password: &[u8], hash: &str) -> bool {
+    let parts: Vec<&str> = hash.split('$').collect();
+    let salt = general_purpose::STANDARD.decode(parts[2].as_bytes()).unwrap();
+    let hash = hash_password(password, salt.as_ref());
+    hash == hash
 }
 
 #[tonic::async_trait]
@@ -60,8 +82,10 @@ impl Account for AccountService {
         &self,
         request: Request<proto::GetAccountRequest>,
     ) -> Result<Response<proto::GetAccountResponse>, Status> {
-        println!("Got a request: {:?}", request);
         let data = request.into_inner();
+        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token) {
+            return Err(Status::unauthenticated("Invalid token"));
+        }
         let row = get_account(data.id).await.unwrap();
         let response = proto::GetAccountResponse {
             id: row.get(0),
@@ -74,15 +98,56 @@ impl Account for AccountService {
     }
 
     async fn update_account(&self, request: Request<UpdateAccountRequest>) -> Result<Response<UpdateAccountResponse>, Status> {
-        todo!()
+        let data = request.into_inner();
+        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token) {
+            return Err(Status::unauthenticated("Invalid token"));
+        }
+        let id = data.id.clone();
+        let salt = random::<[u8; 32]>();
+        let salt = salt.as_ref();
+        let password = hash_password(data.password.as_ref(), salt);
+        update_account(id.clone(), data.email, password, data.username).await;
+        let response = UpdateAccountResponse {
+            id,
+            updated: true,
+        };
+        Ok(Response::new(response))
     }
 
     async fn delete_account(&self, request: Request<DeleteAccountRequest>) -> Result<Response<DeleteAccountResponse>, Status> {
-        todo!()
+        let data = request.into_inner();
+        if !check_token(data.token.as_str(), data.id.as_str(), &self.users_token) {
+            return Err(Status::unauthenticated("Invalid token"));
+        }
+        delete_account(data.id).await;
+        let response = DeleteAccountResponse {
+            id,
+            deleted: true,
+        };
+        Ok(Response::new(response))
     }
 
-    async fn login(&self, request: Request<LoginRequest>) -> Result<Response<LoginResponse>, Status> {
-        todo!()
+    async fn login(&mut self, request: Request<LoginRequest>) -> Result<Response<LoginResponse>, Status> {
+        let data = request.into_inner();
+        let row = match get_account_by_mail(data.email).await {
+            Some(row) => row,
+            None => return Err(Status::unauthenticated("Invalid password or email")),
+        };
+        let password: String = row.get(3);
+        let same_password = verify_password(data.password.as_ref(), password.as_str());
+        let id: String = row.get(0);
+        if !same_password {
+            return Err(Status::unauthenticated("Invalid password or email"));
+        }
+
+        let token = Uuid::new_v4().to_string();
+        self.users_token.insert(id.clone(), token.clone());
+        let response = LoginResponse {
+            id,
+            logged: true,
+            token,
+        };
+        Ok(Response::new(response))
     }
 }
 
