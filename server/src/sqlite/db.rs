@@ -1,4 +1,4 @@
-use std::error::Error;
+
 use sqlx::SqlitePool;
 const DATABASE_FILE: &str = "./db/data.db";
 async fn get_pool() -> SqlitePool {
@@ -6,6 +6,7 @@ async fn get_pool() -> SqlitePool {
 }
 
 pub async fn create_database_and_database_file() {
+    std::fs::create_dir_all("./db").unwrap();
     let path = DATABASE_FILE;
     if !std::path::Path::new(path).exists() {
         std::fs::File::create(path).unwrap();
@@ -33,12 +34,12 @@ pub async fn create_account(id: String, email: String, password: String, usernam
 
 pub async fn get_account(id: String) -> Option<sqlx::sqlite::SqliteRow> {
     let pool = get_pool().await;
-    let row = sqlx::query("SELECT id, email, username, created_at, updated_at FROM account WHERE id = ?")
+    
+    sqlx::query("SELECT id, email, username, created_at, updated_at FROM account WHERE id = ?")
         .bind(id)
         .fetch_optional(&pool)
         .await
-        .unwrap();
-    row
+        .unwrap()
 }
 
 pub async fn update_account(id: String, email: String, password: String, username: String) {

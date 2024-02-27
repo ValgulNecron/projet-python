@@ -4,7 +4,7 @@ use std::num::NonZeroU32;
 use ring::pbkdf2;
 use proto::account_server::{Account, AccountServer};
 use uuid::Uuid;
-use rand::{random, Rng};
+use rand::{random};
 use tonic::{Request, Response, Status};
 use crate::proto::{DeleteAccountRequest, DeleteAccountResponse, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
 use crate::sqlite::db::{create_account, create_database_and_database_file, get_account};
@@ -27,11 +27,11 @@ fn hash_password(password: &[u8], salt: &[u8]) -> String {
     pbkdf2::derive(
         pbkdf2::PBKDF2_HMAC_SHA512,
         NonZeroU32::new(100_000).unwrap(), // Number of iterations
-        &salt,
+        salt,
         password,
         &mut output,
     );
-    general_purpose::STANDARD.encode(&output)
+    general_purpose::STANDARD.encode(output)
 }
 
 #[tonic::async_trait]
@@ -88,6 +88,7 @@ impl Account for AccountService {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("Server running");
     create_database_and_database_file().await;
     let addr = "0.0.0.0:3333".parse().unwrap();
     let account_service = AccountService::default();
@@ -100,5 +101,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .add_service(AccountServer::new(account_service))
         .serve(addr)
         .await?;
+    println!("Server running on {}", addr);
     Ok(())
 }
