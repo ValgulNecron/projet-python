@@ -1,5 +1,5 @@
 
-use sqlx::SqlitePool;
+use sqlx::{Row, SqlitePool};
 const DATABASE_FILE: &str = "./db/data.db";
 async fn get_pool() -> SqlitePool {
     SqlitePool::connect(DATABASE_FILE).await.unwrap()
@@ -71,4 +71,17 @@ pub async fn get_account_by_mail(email: String) -> Option<sqlx::sqlite::SqliteRo
         .fetch_optional(&pool)
         .await
         .unwrap()
+}
+
+
+pub async fn entry_exists(email: &str, username: &str) -> bool {
+    let pool = get_pool().await;
+    let row_exists = sqlx::query("SELECT EXISTS(SELECT 1 FROM users WHERE email = ? OR username = ?)")
+        .bind(email)
+        .bind(username)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+
+    row_exists.get::<bool, _>(0)
 }

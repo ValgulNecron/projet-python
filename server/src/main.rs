@@ -9,7 +9,7 @@ use uuid::Uuid;
 use rand::{random};
 use tonic::{Request, Response, Status};
 use crate::proto::{DeleteAccountRequest, DeleteAccountResponse, GetAccountRequest, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
-use crate::sqlite::db::{create_account, create_database_and_database_file, delete_account, get_account, get_account_by_mail, update_account};
+use crate::sqlite::db::{create_account, create_database_and_database_file, delete_account, entry_exists, get_account, get_account_by_mail, update_account};
 use base64::{engine::general_purpose, Engine as _};
 use sqlx::Row;
 use tokio::sync::RwLock;
@@ -73,9 +73,12 @@ impl Account for AccountService {
         &self,
         request: Request<proto::CreateAccountRequest>,
     ) -> Result<Response<proto::CreateAccountResponse>, Status> {
+        let data = request.into_inner();
+        if entry_exists(data.email.as_str(), data.username.as_str()) {
+            return Err(Status::already_exists("This entry already exist."))
+        }
         let id = Uuid::new_v4();
         println!("Got a request: {:?}", request);
-        let data = request.into_inner();
         let salt = random::<[u8; 32]>();
         let salt = salt.as_ref();
         let password = hash_password(data.password.as_ref(), salt);
