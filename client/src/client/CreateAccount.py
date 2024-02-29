@@ -1,3 +1,7 @@
+import grpc
+from client.src.client.proto_compiled.account import account_pb2_grpc, account_pb2
+
+
 class CreateAccount:
     email = ""
     password = ""
@@ -9,10 +13,10 @@ class CreateAccount:
         self.username = username
 
     def create_account(self):
-        payload = {
-            "email": self.email,
-            "password": self.password,
-            "username": self.username
-        }
+        with grpc.insecure_channel("141.145.209.36:3333") as channel:
+            stub = account_pb2_grpc.AccountStub(channel)
+            response = stub.CreateAccount(account_pb2.CreateAccountRequest(email=self.email,password=self.password,username=self.username))
+        print("client received: " + str(response.created) + ' ' + response.id)
 
-        response = make_request(payload, "account.account/CreateAccount")
+
+CreateAccount("a", "a", "a").create_account()
