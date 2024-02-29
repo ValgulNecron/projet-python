@@ -4,7 +4,7 @@
   "armors": [
     {
       "id": 1,
-      "name": "Poitrine rembourre",
+      "description": "Poitrine rembourre",
       "force": 10,
       "endurance": 10
       "intelligence": 10,
@@ -14,10 +14,13 @@
     },
     {
       "id": 2,
-      "name": "Leggings of Insight",
-      "defense": 30,
-      "element": "Air",
-      "rarity": "Legendary"
+      "description": "Robe d'Archeveque",
+      "force": 10,
+      "endurance": 10,
+      "intelligence": 10,
+      "vitalite": 30,
+      "mana": 40,
+      "rarete": "Rare
     }
   ]
 }
