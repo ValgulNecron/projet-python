@@ -1,6 +1,7 @@
-class DeleteAccount :
+class DeleteAccount:
     id = ""
     token = ""
-    def __init__ (self, id, token) :
+
+    def __init__(self, id, token):
         self.id = id
         self.token = token
