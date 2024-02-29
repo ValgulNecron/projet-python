@@ -1,7 +1,7 @@
 # JSON
 
 {
-  "armes": [
+  "weapons": [
     {
       "id": 1,
       "description": "Epee du troubadour",
@@ -62,9 +62,5 @@
       "mana": 0,
       "rareté": "Épique"
     }
-  ]
-}
-  ]
-}
   ]
 }
