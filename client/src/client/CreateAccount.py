@@ -17,6 +17,3 @@ class CreateAccount:
             stub = account_pb2_grpc.AccountStub(channel)
             response = stub.CreateAccount(account_pb2.CreateAccountRequest(email=self.email,password=self.password,username=self.username))
         print("client received: " + str(response.created) + ' ' + response.id)
-
-
-CreateAccount("a", "a", "a").create_account()
