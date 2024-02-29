@@ -1,0 +1,24 @@
+import json
+
+class ItemLoader:
+    def __init__(self, weapon_file, armor_file):
+        self.weapon_file = weapon_file
+        self.armor_file = armor_file
+        self.weapons = self.load_items(weapon_file)
+        self.armors = self.load_items(armor_file)
+
+    def load_items(self, file_path):
+        with open(file_path, 'r') as file:
+            return json.load(file)
+
+    def get_weapon(self, id):
+        for weapon in self.weapons['weapons']:
+            if weapon['id'] == id:
+                return weapon
+        return None
+
+    def get_armor(self, id):
+        for armor in self.armors['armors']:
+            if armor['id'] == id:
+                return armor
+        return None
