@@ -1,0 +1,23 @@
+# json armors
+
+{
+  "armors": [
+    {
+      "id": 1,
+      "name": "Poitrine rembourre",
+      "force": 10,
+      "endurance": 10
+      "intelligence": 10,
+      "vitalite": 50,
+      "mana": 10,
+      "rarete": "Rare"
+    },
+    {
+      "id": 2,
+      "name": "Leggings of Insight",
+      "defense": 30,
+      "element": "Air",
+      "rarity": "Legendary"
+    }
+  ]
+}
