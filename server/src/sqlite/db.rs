@@ -1,6 +1,7 @@
-
 use sqlx::{Row, SqlitePool};
+
 const DATABASE_FILE: &str = "./db/data.db";
+
 async fn get_pool() -> SqlitePool {
     SqlitePool::connect(DATABASE_FILE).await.unwrap()
 }
@@ -34,7 +35,7 @@ pub async fn create_account(id: String, email: String, password: String, usernam
 
 pub async fn get_account(id: String) -> Option<sqlx::sqlite::SqliteRow> {
     let pool = get_pool().await;
-    
+
     sqlx::query("SELECT id, email, username, created_at, updated_at FROM account WHERE id = ?")
         .bind(id)
         .fetch_optional(&pool)
@@ -44,15 +45,17 @@ pub async fn get_account(id: String) -> Option<sqlx::sqlite::SqliteRow> {
 
 pub async fn update_account(id: String, email: String, password: String, username: String) {
     let pool = get_pool().await;
-    sqlx::query("UPDATE account SET email = ?, password = ?, username = ?, updated_at = ? WHERE id = ?")
-        .bind(email)
-        .bind(password)
-        .bind(username)
-        .bind(chrono::Utc::now().to_rfc3339())
-        .bind(id)
-        .execute(&pool)
-        .await
-        .unwrap();
+    sqlx::query(
+        "UPDATE account SET email = ?, password = ?, username = ?, updated_at = ? WHERE id = ?",
+    )
+    .bind(email)
+    .bind(password)
+    .bind(username)
+    .bind(chrono::Utc::now().to_rfc3339())
+    .bind(id)
+    .execute(&pool)
+    .await
+    .unwrap();
 }
 
 pub async fn delete_account(id: String) {
@@ -73,15 +76,15 @@ pub async fn get_account_by_mail(email: String) -> Option<sqlx::sqlite::SqliteRo
         .unwrap()
 }
 
-
 pub async fn entry_exists(email: &str, username: &str) -> bool {
     let pool = get_pool().await;
-    let row_exists = sqlx::query("SELECT EXISTS(SELECT 1 FROM users WHERE email = ? OR username = ?)")
-        .bind(email)
-        .bind(username)
-        .fetch_one(&pool)
-        .await
-        .unwrap();
+    let row_exists =
+        sqlx::query("SELECT EXISTS(SELECT 1 FROM users WHERE email = ? OR username = ?)")
+            .bind(email)
+            .bind(username)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
 
     row_exists.get::<bool, _>(0)
 }

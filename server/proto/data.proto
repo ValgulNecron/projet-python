@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package data;
+
+service UserData {
+    rpc GetUserData (GetUserDataRequest) returns (GetUserDataResponse);
+    rpc AddUserData (AddUserDataRequest) returns (AddUserDataResponse);
+    rpc UpdateUserData (UpdateUserDataRequest) returns (UpdateUserDataResponse);
+    rpc DeleteUserData (DeleteUserDataRequest) returns (DeleteUserDataResponse);
+}
+
+message GetUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+}
+
+message GetUserDataResponse {
+    repeated Item items = 1;
+}
+
+message Item {
+    string item_id = 1;
+    string item_name = 2;
+    float item_price = 3;
+    int32 item_quantity = 4;
+    string status = 5;
+    int32 slot_number = 6;
+}
+
+message AddUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+    Item item = 3;
+}
+
+message AddUserDataResponse {
+    string user_id = 1;
+    bool success = 2;
+}
+
+message UpdateUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+    Item old_item = 3;
+    Item new_item = 4;
+}
+
+message UpdateUserDataResponse {
+    string user_id = 1;
+    bool success = 2;
+}
+
+message DeleteUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+    Item item = 3;
+}
+
+message DeleteUserDataResponse {
+    string user_id = 1;
+    bool success = 2;
+}
+
+
+service ItemList {
+    rpc GetItemList (GetItemListRequest) returns (GetItemListResponse);
+    rpc GetItem (GetItemRequest) returns (GetItemResponse);
+}
+
+message GetItemListRequest {
+    string token = 1;
+}
+
+message GetItemListResponse {
+    repeated Item items = 1;
+}
+
+message GetItemRequest {
+    string item_id = 1;
+    string token = 2;
+}
+
+message GetItemResponse {
+    Item item = 1;
+}
+
+service MapData {
+    rpc GetMapData (GetMapDataRequest) returns (GetMapDataResponse);
+}
+
+message GetMapDataRequest {
+    string token = 1;
+}
+
+message GetMapDataResponse {
+    bytes map = 1;
+}
