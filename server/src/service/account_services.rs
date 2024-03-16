@@ -13,7 +13,7 @@ use sqlx::Row;
 use tonic::{Request, Response, Status};
 use tonic_reflection::server::{Error, ServerReflection, ServerReflectionServer};
 use uuid::Uuid;
-mod proto {
+pub(crate) mod proto {
     tonic::include_proto!("account");
 
     pub(crate) const FILE_DESCRIPTOR_SET: &[u8] =
@@ -62,12 +62,12 @@ impl Account for AccountService {
         &self,
         request: Request<proto::CreateAccountRequest>,
     ) -> Result<Response<proto::CreateAccountResponse>, Status> {
+        println!("Got a request: {:?}", request);
         let data = request.into_inner();
-        if entry_exists(data.email.as_str(), data.username.as_str()) {
+        if entry_exists(data.email.as_str(), data.username.as_str()).await {
             return Err(Status::already_exists("This entry already exist."));
         }
         let id = Uuid::new_v4();
-        println!("Got a request: {:?}", request);
         let salt = random::<[u8; 32]>();
         let salt = salt.as_ref();
         let password = hash_password(data.password.as_ref(), salt);
@@ -158,17 +158,6 @@ impl Account for AccountService {
         Ok(Response::new(response))
     }
 }
-
-pub fn get_account_service_reflection() -> Result<
-    ServerReflectionServer<impl ServerReflection<ServerReflectionInfoStream = _> + Sized>,
-    Error,
-> {
-    let service = tonic_reflection::server::Builder::configure()
-        .register_encoded_file_descriptor_set(proto::FILE_DESCRIPTOR_SET)
-        .build();
-    service
-}
-
 pub fn get_account_service(account_service: AccountService) -> AccountServer<AccountService> {
     AccountServer::new(account_service)
 }

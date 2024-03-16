@@ -1,5 +1,5 @@
 use crate::service::account_services::{
-    get_account_service, get_account_service_reflection, AccountService,
+    get_account_service, AccountService,
 };
 use crate::service::state::AccountToken;
 use base64::Engine as _;
@@ -21,10 +21,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let account_service = AccountService {
         users_token: account_token.clone(),
     };
-
+    let service = tonic_reflection::server::Builder::configure()
+        .register_encoded_file_descriptor_set(service::account_services::proto::FILE_DESCRIPTOR_SET)
+        .build()?;
     Server::builder()
-        .add_service(get_account_service_reflection()?)
-        .add_service(get_account_service(account_service)?)
+        .add_service(service)
+        .add_service(get_account_service(account_service))
         .serve(addr)
         .await?;
     println!("Server running on {}", addr);

@@ -15,7 +15,7 @@ chrono = "0.4.34"
 ring = "0.17.8"
 pbkdf2 = "0.13.0-pre.0"
 rand = "0.8.5"
-base64 = "0.21.7"
+base64 = "0.22.0"
 tonic-reflection = "0.11.0"
 [build-dependencies]
 tonic-build = "0.11.0"
