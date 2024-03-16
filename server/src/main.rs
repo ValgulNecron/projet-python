@@ -73,12 +73,12 @@ impl Account for AccountService {
         &self,
         request: Request<proto::CreateAccountRequest>,
     ) -> Result<Response<proto::CreateAccountResponse>, Status> {
+        println!("Got a request: {:?}", request);
         let data = request.into_inner();
-        if entry_exists(data.email.as_str(), data.username.as_str()) {
+        if entry_exists(data.email.as_str(), data.username.as_str()).await {
             return Err(Status::already_exists("This entry already exist."))
         }
         let id = Uuid::new_v4();
-        println!("Got a request: {:?}", request);
         let salt = random::<[u8; 32]>();
         let salt = salt.as_ref();
         let password = hash_password(data.password.as_ref(), salt);
