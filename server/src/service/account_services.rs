@@ -23,7 +23,7 @@ pub(crate) mod proto {
         tonic::include_file_descriptor_set!("account_descriptor");
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct AccountService {
     pub(crate) users_token: AccountToken,
 }
