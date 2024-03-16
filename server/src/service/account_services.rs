@@ -1,18 +1,21 @@
-use crate::service::account_services::proto::account_server::{Account, AccountServer};
+use std::num::NonZeroU32;
+
+use base64::Engine;
+use base64::engine::general_purpose;
+use rand::random;
+use ring::pbkdf2::derive;
+use sqlx::Row;
+use tonic::{Request, Response, Status};
+use tonic_reflection::server::ServerReflection;
+use uuid::Uuid;
+
 use crate::service::account_services::proto::{DeleteAccountRequest, DeleteAccountResponse, GetAccountRequest, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
+use crate::service::account_services::proto::account_server::{Account, AccountServer};
 use crate::service::state::{AccountToken, check_token};
 use crate::sqlite::db::{
     create_account, delete_account, entry_exists, get_account, get_account_by_mail, update_account,
 };
-use base64::engine::general_purpose;
-use base64::Engine;
-use rand::random;
-use ring::pbkdf2::derive;
-use std::num::NonZeroU32;
-use sqlx::Row;
-use tonic::{Request, Response, Status};
-use tonic_reflection::server::{Error, ServerReflection, ServerReflectionServer};
-use uuid::Uuid;
+
 pub(crate) mod proto {
     tonic::include_proto!("account");
 

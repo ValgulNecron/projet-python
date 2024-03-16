@@ -62,7 +62,7 @@ message DeleteUserDataResponse {
 }
 
 
-service ItemList {
+service ItemData {
     rpc GetItemList (GetItemListRequest) returns (GetItemListResponse);
     rpc GetItem (GetItemRequest) returns (GetItemResponse);
 }
