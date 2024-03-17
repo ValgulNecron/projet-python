@@ -5,7 +5,7 @@ use crate::service::state::AccountToken;
 use base64::Engine as _;
 use sqlx::Row;
 use tonic::transport::Server;
-use crate::service::data_services::{DataService, get_item_service, get_map_service, get_user_service};
+use crate::service::data_services::{DataService, get_item_service, get_map_service, get_user_service, load_all_item_from_json};
 
 use crate::sqlite::db::create_database_and_database_file;
 
@@ -22,9 +22,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let account_service = AccountService {
         users_token: account_token.clone(),
     };
+
+    let map = load_all_item_from_json();
     let data_service = DataService {
         users_token: account_token.clone(),
+        items: map,
     };
+
     let reflection = tonic_reflection::server::Builder::configure()
         .register_encoded_file_descriptor_set(service::account_services::proto::FILE_DESCRIPTOR_SET)
         .register_encoded_file_descriptor_set(service::data_services::proto::FILE_DESCRIPTOR_SET)

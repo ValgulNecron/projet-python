@@ -17,6 +17,16 @@ pub async fn create_database_and_database_file() {
         .execute(&pool)
         .await
         .unwrap();
+
+    sqlx::querry("
+            CREATE TABLE IF NOT EXISTS user_data (
+                user_id TEXT,
+                item_id TEXT,
+                slot INTEGER,
+                PRIMARY KEY (user_id, item_id)
+            )
+        "
+    )
 }
 
 pub async fn create_account(id: String, email: String, password: String, username: String) {
