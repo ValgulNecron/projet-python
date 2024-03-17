@@ -147,6 +147,8 @@ impl From<ItemTemp> for Item {
             mana: item.mana,
             rarete: item.rarete,
             vitesse: item.vitesse,
+            sprite: item.sprite.clone(),
+            slot: item.slot,
         }
     }
 }
@@ -163,8 +165,8 @@ impl From<Item> for ItemTemp {
             mana: item.mana,
             rarete: item.rarete,
             vitesse: item.vitesse,
-            sprite: vec![0; 0],
-            slot: 0,
+            sprite: item.sprite.clone(),
+            slot: item.slot,
         }
     }
 }
@@ -181,8 +183,8 @@ impl From<&Item> for ItemTemp {
             mana: item.mana,
             rarete: item.rarete,
             vitesse: item.vitesse,
-            sprite: vec![0; 0],
-            slot: 0,
+            sprite: item.sprite.clone(),
+            slot: item.slot,
         }
     }
 }
@@ -199,6 +201,8 @@ impl From<&ItemTemp> for Item {
             mana: item.mana,
             rarete: item.rarete,
             vitesse: item.vitesse,
+            sprite: item.sprite.clone(),
+            slot: item.slot,
         }
     }
 }
