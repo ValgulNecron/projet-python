@@ -8,6 +8,7 @@ class GetAccount:
     def __init__(self, id, token):
         self.id = id
         self.token = token
+
     def get_account(self):
         with grpc.insecure_channel("141.145.209.36:3333") as channel:
             stub = account_pb2_grpc.AccountStub(channel)

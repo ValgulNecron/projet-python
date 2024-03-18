@@ -8,6 +8,7 @@ class Login:
     def __init__(self, email, password):
         self.email = email
         self.password = password
+
     def login(self):
         with grpc.insecure_channel("141.145.209.36:3333") as channel:
             stub = account_pb2_grpc.AccountStub(channel)

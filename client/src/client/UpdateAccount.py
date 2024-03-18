@@ -14,6 +14,7 @@ class UpdateAccount:
         self.email = email
         self.password = password
         self.username = username
+
     def update_account(self):
         with grpc.insecure_channel("141.145.209.36:3333") as channel:
             stub = account_pb2_grpc.AccountStub(channel)
