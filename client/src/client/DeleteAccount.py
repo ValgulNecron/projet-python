@@ -1,7 +1,6 @@
 import grpc
 from client.src.client.proto_compiled.account import account_pb2_grpc, account_pb2
 
-
 class DeleteAccount:
     id = ""
     token = ""
