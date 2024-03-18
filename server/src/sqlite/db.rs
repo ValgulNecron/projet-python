@@ -93,7 +93,7 @@ pub async fn get_account_by_mail(email: String) -> Option<sqlx::sqlite::SqliteRo
 pub async fn entry_exists(email: &str, username: &str) -> bool {
     let pool = get_pool().await;
     let row_exists =
-        sqlx::query("SELECT EXISTS(SELECT 1 FROM users WHERE email = ? OR username = ?)")
+        sqlx::query("SELECT EXISTS(SELECT 1 FROM account WHERE email = ? OR username = ?)")
             .bind(email)
             .bind(username)
             .fetch_one(&pool)
