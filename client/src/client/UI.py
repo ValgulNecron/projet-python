@@ -15,7 +15,7 @@ def create_account():
     if username.strip() == '' or password.strip() == '' or email.strip() == '':
         messagebox.showerror("Erreur", "Tous les champs sont requis.")
     else:
-        # creer un objet CreateAccount
+        # créer un objet CreateAccount
         create_account = CreateAccount(email, password, username)
         create_account.create_account()
 # Créer la fenêtre principale

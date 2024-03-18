@@ -19,7 +19,7 @@ def login():
         login.login()
 # Créer la fenêtre principale
 root = tk.Tk()
-root.title("Créer un compte")
+root.title("Connexion")
 
 # Style 8-bit
 bg_color = "#444444"  # Couleur de fond
