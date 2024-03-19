@@ -48,11 +48,15 @@ fn hash_password(password: &[u8], salt: &[u8]) -> String {
 
 fn verify_password(password: &[u8], hash: &str) -> bool {
     let parts: Vec<&str> = hash.split('$').collect();
+    if parts.len() != 4 {
+        return false;
+    }
     let saved_hash = parts[3];
     let salt = general_purpose::STANDARD
         .decode(parts[2].as_bytes())
-        .unwrap();
-    let hash = hash_password(password, salt.as_ref());
+        .unwrap();    let hash = hash_password(password, &salt);
+    println!("hash: {}", hash);
+    println!("saved_hash: {}", saved_hash);
     hash == saved_hash
 }
 
@@ -136,6 +140,7 @@ impl Account for AccountService {
         &self,
         request: Request<LoginRequest>,
     ) -> Result<Response<LoginResponse>, Status> {
+        println!("Got a request: {:?}", request);
         let data = request.into_inner();
         let row = match get_account_by_username(data.username).await {
             Some(row) => row,
