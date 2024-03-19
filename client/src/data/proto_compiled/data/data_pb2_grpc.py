@@ -2,8 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import  client.src.data.proto_compiled.data.data_pb2 as data__pb2
-
+import client.src.data.proto_compiled.data.data_pb2 as data__pb2
 
 class UserDataStub(object):
     """Missing associated documentation comment in .proto file."""
@@ -108,10 +107,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/GetUserData',
-            data__pb2.GetUserDataRequest.SerializeToString,
-            data__pb2.GetUserDataResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             data__pb2.GetUserDataRequest.SerializeToString,
+                                             data__pb2.GetUserDataResponse.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def AddUserData(request,
@@ -125,10 +124,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/AddUserData',
-            data__pb2.AddUserDataRequest.SerializeToString,
-            data__pb2.AddUserDataResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             data__pb2.AddUserDataRequest.SerializeToString,
+                                             data__pb2.AddUserDataResponse.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def UpdateUserData(request,
@@ -142,10 +141,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/UpdateUserData',
-            data__pb2.UpdateUserDataRequest.SerializeToString,
-            data__pb2.UpdateUserDataResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             data__pb2.UpdateUserDataRequest.SerializeToString,
+                                             data__pb2.UpdateUserDataResponse.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def DeleteUserData(request,
@@ -159,10 +158,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/DeleteUserData',
-            data__pb2.DeleteUserDataRequest.SerializeToString,
-            data__pb2.DeleteUserDataResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             data__pb2.DeleteUserDataRequest.SerializeToString,
+                                             data__pb2.DeleteUserDataResponse.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
 
 class ItemDataStub(object):
@@ -236,10 +235,10 @@ class ItemData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.ItemData/GetItemList',
-            data__pb2.GetItemListRequest.SerializeToString,
-            data__pb2.GetItemListResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             data__pb2.GetItemListRequest.SerializeToString,
+                                             data__pb2.GetItemListResponse.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetItem(request,
@@ -253,10 +252,10 @@ class ItemData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.ItemData/GetItem',
-            data__pb2.GetItemRequest.SerializeToString,
-            data__pb2.GetItemResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             data__pb2.GetItemRequest.SerializeToString,
+                                             data__pb2.GetItemResponse.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
 
 class MapDataStub(object):
@@ -314,7 +313,7 @@ class MapData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.MapData/GetMapData',
-            data__pb2.GetMapDataRequest.SerializeToString,
-            data__pb2.GetMapDataResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+                                             data__pb2.GetMapDataRequest.SerializeToString,
+                                             data__pb2.GetMapDataResponse.FromString,
+                                             options, channel_credentials,
+                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
