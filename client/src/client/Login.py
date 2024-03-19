@@ -17,3 +17,5 @@ class Login:
             stub = account_pb2_grpc.AccountStub(channel)
             response = stub.Login(account_pb2.LoginRequest(username=self.username, password=self.password))
         print(response)
+        Global.TOKEN = response.token
+        print(Global.TOKEN)
