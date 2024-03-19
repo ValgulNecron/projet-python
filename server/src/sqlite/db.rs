@@ -81,9 +81,9 @@ pub async fn delete_account(id: String) {
         .unwrap();
 }
 
-pub async fn get_account_by_mail(email: String) -> Option<sqlx::sqlite::SqliteRow> {
+pub async fn get_account_by_username(email: String) -> Option<sqlx::sqlite::SqliteRow> {
     let pool = get_pool().await;
-    sqlx::query("SELECT id, email, username, password FROM account WHERE email = ?")
+    sqlx::query("SELECT id, email, username, password FROM account WHERE username = ?")
         .bind(email)
         .fetch_optional(&pool)
         .await

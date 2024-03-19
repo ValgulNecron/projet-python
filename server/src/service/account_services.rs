@@ -11,9 +11,7 @@ use uuid::Uuid;
 use crate::service::account_services::proto::{DeleteAccountRequest, DeleteAccountResponse, GetAccountRequest, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
 use crate::service::account_services::proto::account_server::{Account, AccountServer};
 use crate::service::state::{AccountToken, check_token};
-use crate::sqlite::db::{
-    create_account, delete_account, entry_exists, get_account, get_account_by_mail, update_account,
-};
+use crate::sqlite::db::{create_account, delete_account, entry_exists, get_account,  get_account_by_username, update_account};
 
 pub(crate) mod proto {
     tonic::include_proto!("account");
@@ -139,7 +137,7 @@ impl Account for AccountService {
         request: Request<LoginRequest>,
     ) -> Result<Response<LoginResponse>, Status> {
         let data = request.into_inner();
-        let row = match get_account_by_mail(data.email).await {
+        let row = match get_account_by_username(data.username).await {
             Some(row) => row,
             None => return Err(Status::unauthenticated("Invalid password or email")),
         };
