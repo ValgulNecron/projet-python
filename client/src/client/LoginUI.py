@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from tkinter import messagebox
 
@@ -5,16 +6,15 @@ from client.src.client.Login import Login
 
 
 def login():
-    email = email_entry.get()
+    username = username_entry.get()
     password = password_entry.get()
 
     # Vérifier si les champs ne sont pas vides
-    if email.strip() == '' or password.strip() == '':
+    if username.strip() == '' or password.strip() == '':
         messagebox.showerror("Erreur", "Tous les champs sont requis.")
     else:
         # créer un objet Login
-        login = Login(email, password)
-        login.login()
+        Login(username, password).login()
 
 
 # Créer la fenêtre principale
@@ -30,10 +30,10 @@ font_style = ("Courier", 12, "bold")  # Police de caractères
 root.config(bg=bg_color)
 
 # Créer les widgets avec le style 8-bit
-email_label = tk.Label(root, text="Email:", bg=bg_color, fg=fg_color, font=font_style)
-email_label.grid(row=1, column=0, sticky="w")
-email_entry = tk.Entry(root, bg=bg_color, fg=fg_color, font=font_style, insertbackground=fg_color)
-email_entry.grid(row=1, column=1)
+username_label = tk.Label(root, text="Nom d'utilisateur:", bg=bg_color, fg=fg_color, font=font_style)
+username_label.grid(row=1, column=0, sticky="w")
+username_entry = tk.Entry(root, bg=bg_color, fg=fg_color, font=font_style, insertbackground=fg_color)
+username_entry.grid(row=1, column=1)
 
 password_label = tk.Label(root, text="Mot de passe:", bg=bg_color, fg=fg_color, font=font_style)
 password_label.grid(row=2, column=0, sticky="w")
