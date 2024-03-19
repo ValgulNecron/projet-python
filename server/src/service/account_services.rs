@@ -139,13 +139,13 @@ impl Account for AccountService {
         let data = request.into_inner();
         let row = match get_account_by_username(data.username).await {
             Some(row) => row,
-            None => return Err(Status::unauthenticated("Invalid password or email")),
+            None => return Err(Status::unauthenticated("Invalid password or username")),
         };
         let password: String = row.get(3);
         let same_password = verify_password(data.password.as_ref(), password.as_str());
         let id: String = row.get(0);
         if !same_password {
-            return Err(Status::unauthenticated("Invalid password or email"));
+            return Err(Status::unauthenticated("Invalid password or username"));
         }
 
         let token = Uuid::new_v4().to_string();
