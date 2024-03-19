@@ -1,10 +1,12 @@
-import grpc
-
-from client.src.client.CreateAccount import CreateAccount
-from client.src.client.proto_compiled.account import account_pb2_grpc, account_pb2
+import os
 import tkinter as tk
 from tkinter import messagebox
-import client.src.client.CreateAccount as CreateAccount
+
+from client.src.client.CreateAccount import CreateAccount
+
+for k in list(os.environ.keys()):
+    if k.lower().endswith('_proxy'):
+        del os.environ[k]
 
 
 def create_account():
@@ -17,8 +19,9 @@ def create_account():
         messagebox.showerror("Erreur", "Tous les champs sont requis.")
     else:
         # créer un objet CreateAccount
-        create_account = CreateAccount(email, password, username)
-        create_account.create_account()
+        CreateAccount(email, password, username).create_account()
+
+
 # Créer la fenêtre principale
 root = tk.Tk()
 root.title("Créer un compte")

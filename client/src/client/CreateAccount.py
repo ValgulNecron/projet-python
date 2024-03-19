@@ -1,4 +1,5 @@
 import grpc
+
 from client import Global
 from client.src.client.proto_compiled.account import account_pb2_grpc, account_pb2
 
@@ -14,9 +15,10 @@ class CreateAccount:
         self.username = username
 
     def create_account(self):
-        with grpc.insecure_channel("141.145.209.36:3333") as channel:
+        with grpc.insecure_channel(Global.IP) as channel:
             stub = account_pb2_grpc.AccountStub(channel)
-            response = stub.CreateAccount(account_pb2.CreateAccountRequest(email=self.email,password=self.password,username=self.username))
+            response = stub.CreateAccount(
+                account_pb2.CreateAccountRequest(email=self.email, password=self.password, username=self.username))
         print(response)
-        Global.id=response.id
-        print(Global.id)
+        Global.ID = response.id
+        print(Global.ID)

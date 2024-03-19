@@ -1,5 +1,8 @@
 import grpc
+
+from client import Global
 from client.src.client.proto_compiled.account import account_pb2_grpc, account_pb2
+
 
 class UpdateAccount:
     id = ""
@@ -16,7 +19,9 @@ class UpdateAccount:
         self.username = username
 
     def update_account(self):
-        with grpc.insecure_channel("141.145.209.36:3333") as channel:
+        with grpc.insecure_channel(Global.IP) as channel:
             stub = account_pb2_grpc.AccountStub(channel)
-            response = stub.UpdateAccount(account_pb2.UpdateAccountRequest(id=self.id,token=self.token,email=self.email,password=self.password,username=self.username))
+            response = stub.UpdateAccount(
+                account_pb2.UpdateAccountRequest(id=self.id, token=self.token, email=self.email, password=self.password,
+                                                 username=self.username))
         print("client received: " + str(response.updated) + ' ' + response.id)

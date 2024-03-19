@@ -1,14 +1,12 @@
-import grpc
-from client.src.client.proto_compiled.account import account_pb2_grpc, account_pb2
-from client.src.client.Login import Login
 import tkinter as tk
 from tkinter import messagebox
+
+from client.src.client.Login import Login
 
 
 def login():
     email = email_entry.get()
     password = password_entry.get()
-
 
     # Vérifier si les champs ne sont pas vides
     if email.strip() == '' or password.strip() == '':
@@ -17,6 +15,8 @@ def login():
         # créer un objet Login
         login = Login(email, password)
         login.login()
+
+
 # Créer la fenêtre principale
 root = tk.Tk()
 root.title("Connexion")
@@ -39,7 +39,6 @@ password_label = tk.Label(root, text="Mot de passe:", bg=bg_color, fg=fg_color, 
 password_label.grid(row=2, column=0, sticky="w")
 password_entry = tk.Entry(root, show="*", bg=bg_color, fg=fg_color, font=font_style, insertbackground=fg_color)
 password_entry.grid(row=2, column=1)
-
 
 create_button = tk.Button(root, text="Connexion", bg=btn_color, fg=bg_color, font=font_style,
                           command=login)
