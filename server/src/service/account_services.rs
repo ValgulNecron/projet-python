@@ -48,11 +48,15 @@ fn hash_password(password: &[u8], salt: &[u8]) -> String {
 
 fn verify_password(password: &[u8], hash: &str) -> bool {
     let parts: Vec<&str> = hash.split('$').collect();
-    let saved_hash = parts[3];
+    if parts.len() != 4 {
+        return false;
+    }
+    let saved_hash = hash;
     let salt = general_purpose::STANDARD
         .decode(parts[2].as_bytes())
-        .unwrap();
-    let hash = hash_password(password, salt.as_ref());
+        .unwrap();    let hash = hash_password(password, &salt);
+    println!("hash: {}", hash);
+    println!("saved_hash: {}", saved_hash);
     hash == saved_hash
 }
 
@@ -136,16 +140,17 @@ impl Account for AccountService {
         &self,
         request: Request<LoginRequest>,
     ) -> Result<Response<LoginResponse>, Status> {
+        println!("Got a request: {:?}", request);
         let data = request.into_inner();
         let row = match get_account_by_username(data.username).await {
             Some(row) => row,
-            None => return Err(Status::unauthenticated("Invalid password or username")),
+            None => return Err(Status::unauthenticated("Invalid password or username 1012")),
         };
         let password: String = row.get(3);
         let same_password = verify_password(data.password.as_ref(), password.as_str());
         let id: String = row.get(0);
         if !same_password {
-            return Err(Status::unauthenticated("Invalid password or username"));
+            return Err(Status::unauthenticated("Invalid password or username 1013"));
         }
 
         let token = Uuid::new_v4().to_string();
