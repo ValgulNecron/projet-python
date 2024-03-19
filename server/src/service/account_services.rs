@@ -51,7 +51,7 @@ fn verify_password(password: &[u8], hash: &str) -> bool {
     if parts.len() != 4 {
         return false;
     }
-    let saved_hash = parts[3];
+    let saved_hash = hash;
     let salt = general_purpose::STANDARD
         .decode(parts[2].as_bytes())
         .unwrap();    let hash = hash_password(password, &salt);
