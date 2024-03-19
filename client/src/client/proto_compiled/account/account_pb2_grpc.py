@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from proto import account_pb2 as proto_dot_account__pb2
+from proto import client.src.client.proto_compiled.account.account_pb2 as proto_dot_account__pb2
 
 
 class AccountStub(object):
