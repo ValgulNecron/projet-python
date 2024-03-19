@@ -83,12 +83,12 @@ class DeleteAccountResponse(_message.Message):
     def __init__(self, id: _Optional[str] = ..., deleted: bool = ...) -> None: ...
 
 class LoginRequest(_message.Message):
-    __slots__ = ("email", "password")
-    EMAIL_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("username", "password")
+    USERNAME_FIELD_NUMBER: _ClassVar[int]
     PASSWORD_FIELD_NUMBER: _ClassVar[int]
-    email: str
+    username: str
     password: str
-    def __init__(self, email: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
+    def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
 
 class LoginResponse(_message.Message):
     __slots__ = ("id", "logged", "token")
