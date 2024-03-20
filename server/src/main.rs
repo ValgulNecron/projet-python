@@ -29,7 +29,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let reflection = tonic_reflection::server::Builder::configure()
         .register_encoded_file_descriptor_set(service::account_services::proto::FILE_DESCRIPTOR_SET)
-        //.register_encoded_file_descriptor_set(service::data_services::proto::FILE_DESCRIPTOR_SET)
+        .register_encoded_file_descriptor_set(service::data_services::proto::FILE_DESCRIPTOR_SET)
         .build()?;
     Server::builder()
         .add_service(reflection)

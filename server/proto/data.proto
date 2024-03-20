@@ -98,5 +98,7 @@ message GetMapDataRequest {
 }
 
 message GetMapDataResponse {
-    bytes map = 1;
+    bytes map_tmx = 1;
+    bytes terrain_atlas_tsx = 2;
+    bytes terrain_atlas_png = 3;
 }

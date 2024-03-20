@@ -1,6 +1,6 @@
 use sqlx::{Row, SqlitePool};
 
-const DATABASE_FILE: &str = "./db/data.db";
+const DATABASE_FILE: &str = "./data/data.db";
 
 async fn get_pool() -> SqlitePool {
     SqlitePool::connect(DATABASE_FILE).await.unwrap()

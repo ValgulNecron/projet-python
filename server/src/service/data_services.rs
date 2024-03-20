@@ -8,8 +8,11 @@ use crate::service::data_services::proto::user_data_server::{UserData, UserDataS
 use crate::service::state::{AccountToken, check_token};
 use crate::service::data_services::proto::item_data_server::{ItemData, ItemDataServer};
 
-const TMX_FILE: &str = "map.tmx";
-const ITEM_FILE: &str = "item.json";
+const TMX_FILE: &str = "./data/map.tmx";
+const TSX_FILE: &str = "./data/terrain_atlas.tsx";
+const PNG_FILE: &str = "./data/terrain_atlas.png";
+
+const ITEM_FILE: &str = "./data/item.json";
 
 pub(crate) mod proto {
     tonic::include_proto!("data");
@@ -91,10 +94,23 @@ impl MapData for DataService {
         if !check_token(data.token.as_str(), data.user_id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
         }
-        return match fs::read(TMX_FILE) {
-            Ok(file) => Ok(Response::new(GetMapDataResponse {map: file})),
-            Err(_) => Err(Status::internal("Map file not found."))
-        }
+        let map_tmx = match fs::read(TMX_FILE) {
+            Ok(file) => file,
+            Err(_) => return Err(Status::internal("Map file not found."))
+        };
+        let terrain_atlas_tsx = match fs::read(TSX_FILE) {
+            Ok(file) => file,
+            Err(_) => return Err(Status::internal("Atlas tsx file not found."))
+        };
+        let terrain_atlas_png = match fs::read(TMX_FILE) {
+            Ok(file) => file,
+            Err(_) => return Err(Status::internal("Atlas png file not found."))
+        };
+        Ok(Response::new(GetMapDataResponse {
+            map_tmx,
+            terrain_atlas_tsx,
+            terrain_atlas_png,
+        }))
     }
 }
 

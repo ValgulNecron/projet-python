@@ -37,4 +37,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY --from=builder /server/target/release/server/ /server/
 
+COPY /data/ /server/data/
+
 CMD ["./server"]

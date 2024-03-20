@@ -5,4 +5,4 @@ services:
     ports:
         - "3333:3333"  # host:container
     volumes:
-        - ./db/:/server/db
+        - ./data/:/server/data
