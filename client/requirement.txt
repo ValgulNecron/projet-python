@@ -1,2 +1,5 @@
+grpcio-tools
+grpcio
+grpc-requests
 pygame
 pytmx
