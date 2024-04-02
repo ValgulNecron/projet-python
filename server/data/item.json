@@ -11,7 +11,7 @@
       "mana": 3,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/epee_1"
+      "sprite": "./sprite/epee_1.png"
     },
     {
       "id": "epee_2",
@@ -23,7 +23,7 @@
       "mana": 0,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/epee_2"
+      "sprite": "./sprite/epee_2.png"
     },
     {
       "id": "epee_3",
@@ -35,7 +35,7 @@
       "mana": 0,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/epee_3"
+      "sprite": "./sprite/epee_3.png"
     },
     {
       "id": "lance_1",
@@ -59,7 +59,7 @@
       "mana": 1,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/lance_2"
+      "sprite": "./sprite/lance_2.png"
     },
     {
       "id": "lance_3",
@@ -71,7 +71,7 @@
       "mana": 5,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/lance_3"
+      "sprite": "./sprite/lance_3.png"
     },
     {
       "id": "masse_1",
@@ -82,7 +82,7 @@
       "vitalite": 8,
       "mana": 3,
       "rarete": "Normal",
-      "sprite": "./sprite/masse_1"
+      "sprite": "./sprite/masse_1.png"
     },
     {
       "id": "masse_2",
@@ -93,7 +93,7 @@
       "vitalite": 8,
       "mana": 3,
       "rarete": "Normal",
-      "sprite": "./sprite/masse_2"
+      "sprite": "./sprite/masse_2.png"
     },
     {
       "id": "masse_3",
@@ -105,7 +105,7 @@
       "mana": 3,
       "vitesse": 2.5,
       "rarete": "rare",
-      "sprite": "./sprite/masse_3"
+      "sprite": "./sprite/masse_3.png"
     },
     {
       "id": "plastron_1",
@@ -117,7 +117,7 @@
       "mana": 3,
       "vitesse": 2.5,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_1"
+      "sprite": "./sprite/plastron_1.png"
     },
     {
       "id": "plastron_2",
@@ -129,7 +129,7 @@
       "mana": 4,
       "vitesse": 2.0,
       "rarete": "épique",
-      "sprite": "./sprite/plastron_2"
+      "sprite": "./sprite/plastron_2.png"
     },
     {
       "id": "plastron_3",
@@ -141,7 +141,7 @@
       "mana": 1,
       "vitesse": 1.5,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_3"
+      "sprite": "./sprite/plastron_3.png"
     },
     {
       "id": "plastron_4",
@@ -165,7 +165,7 @@
       "mana": 6,
       "vitesse": 3.0,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_5"
+      "sprite": "./sprite/plastron_5.png"
     },
     {
       "id": "jambiere_1",
@@ -177,7 +177,7 @@
       "mana": 6,
       "vitesse": 0.0,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_5"
+      "sprite": "./sprite/plastron_5.png"
     },
     {
       "id": "jambiere_2",
@@ -189,7 +189,7 @@
       "mana": 3,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/jambiere_2"
+      "sprite": "./sprite/jambiere_2.png"
     },
     {
       "id": "jambiere_3",
@@ -201,7 +201,7 @@
       "mana": 0,
       "vitesse": -0.5,
       "rarete": "Normal",
-      "sprite": "./sprite/jambiere_3"
+      "sprite": "./sprite/jambiere_3.png"
     },
     {
       "id": "bottes_1",
@@ -213,7 +213,7 @@
       "mana": 1,
       "vitesse": 5.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_1"
+      "sprite": "./sprite/bottes_1.png"
     },
     {
       "id": "bottes_2",
@@ -225,7 +225,7 @@
       "mana": 2,
       "vitesse": 3.5,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_2"
+      "sprite": "./sprite/bottes_2.png"
     },
     {
       "id": "bottes_3",
@@ -237,7 +237,7 @@
       "mana": 0,
       "vitesse": 2.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_3"
+      "sprite": "./sprite/bottes_3.png"
     },
     {
       "id": "bottes_4",
@@ -249,7 +249,7 @@
       "mana": 4,
       "vitesse": 4.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_4"
+      "sprite": "./sprite/bottes_4.png"
     },
     {
       "id": "bottes_5",
@@ -261,7 +261,7 @@
       "mana": 2,
       "vitesse": 6.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_5"
+      "sprite": "./sprite/bottes_5.png"
     },
     {
       "id": "51",
