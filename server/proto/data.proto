@@ -26,7 +26,7 @@ message Item {
     int64 intelligence = 5;
     int64 vitalite = 6;
     int64 mana = 7;
-    int64 rarete = 8;
+    string rarete = 8;
     float vitesse = 9;
     bytes sprite = 10;
     int64 slot = 11;
@@ -98,5 +98,7 @@ message GetMapDataRequest {
 }
 
 message GetMapDataResponse {
-    bytes map = 1;
+    bytes map_tmx = 1;
+    bytes terrain_atlas_tsx = 2;
+    bytes terrain_atlas_png = 3;
 }

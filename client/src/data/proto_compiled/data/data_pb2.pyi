@@ -134,7 +134,11 @@ class GetMapDataRequest(_message.Message):
     def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ...) -> None: ...
 
 class GetMapDataResponse(_message.Message):
-    __slots__ = ("map",)
-    MAP_FIELD_NUMBER: _ClassVar[int]
-    map: bytes
-    def __init__(self, map: _Optional[bytes] = ...) -> None: ...
+    __slots__ = ("map_tmx", "terrain_atlas_tsx", "terrain_atlas_png")
+    MAP_TMX_FIELD_NUMBER: _ClassVar[int]
+    TERRAIN_ATLAS_TSX_FIELD_NUMBER: _ClassVar[int]
+    TERRAIN_ATLAS_PNG_FIELD_NUMBER: _ClassVar[int]
+    map_tmx: bytes
+    terrain_atlas_tsx: bytes
+    terrain_atlas_png: bytes
+    def __init__(self, map_tmx: _Optional[bytes] = ..., terrain_atlas_tsx: _Optional[bytes] = ..., terrain_atlas_png: _Optional[bytes] = ...) -> None: ...

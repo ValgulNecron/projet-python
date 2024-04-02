@@ -1,6 +1,7 @@
+use std::error::Error;
 use sqlx::{Row, SqlitePool};
 
-const DATABASE_FILE: &str = "./db/data.db";
+const DATABASE_FILE: &str = "./data/data.db";
 
 async fn get_pool() -> SqlitePool {
     SqlitePool::connect(DATABASE_FILE).await.unwrap()
@@ -101,4 +102,36 @@ pub async fn entry_exists(email: &str, username: &str) -> bool {
             .unwrap();
 
     row_exists.get::<bool, _>(0)
+}
+
+pub async fn get_all_user_data(user_id: &str) -> Vec<(Option<String>, Option<String>, Option<i64>)> {
+    let pool = get_pool().await;
+    sqlx::query_as("SELECT user_id, item_id, slot FROM user_data WHERE user_id = ?")
+        .bind(user_id)
+        .fetch_all(&pool)
+        .await
+        .unwrap()
+}
+
+pub async fn add_user_data(user_id: &str, item_id: &str, slot: i32) -> bool {
+    let pool = get_pool().await;
+    sqlx::query("INSERT OR REPLACE INTO user_data (user_id, item_id, slot) VALUES (?, ?, ?)")
+        .bind(user_id)
+        .bind(item_id)
+        .bind(slot)
+        .execute(&pool)
+        .await
+        .unwrap();
+    true
+}
+
+pub async fn delete_user_data(user_id: &str, item_id: &str) -> bool {
+    let pool = get_pool().await;
+    sqlx::query("DELETE FROM user_data WHERE user_id = ? AND item_id = ?")
+        .bind(user_id)
+        .bind(item_id)
+        .execute(&pool)
+        .await
+        .unwrap();
+    true
 }
