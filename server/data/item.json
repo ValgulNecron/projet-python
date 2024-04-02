@@ -1,3 +1,4 @@
+
 {
   "weapons": [
     {
@@ -203,30 +204,6 @@
       "sprite": "./sprite/jambiere_3"
     },
     {
-      "id": "jambiere_4",
-      "nom": "Protege cuisses mystiques",
-      "force": 1,
-      "endurance": 6,
-      "intelligence": 8,
-      "vitalite": 4,
-      "mana": 10,
-      "vitesse": 0.0,
-      "rarete": "Normal",
-      "sprite": "./sprite/jambiere_4"
-    },
-    {
-      "id": "jambiere_5",
-      "nom": "Cuissardes de vitesse",
-      "force": 2,
-      "endurance": 8,
-      "intelligence": 2,
-      "vitalite": 5,
-      "mana": 2,
-      "vitesse": 2.0,
-      "rarete": "Normal",
-      "sprite": "./sprite/jambiere_5"
-    },
-    {
       "id": "bottes_1",
       "nom": "Bottes de vitesse",
       "force": 1,
@@ -296,7 +273,7 @@
       "mana": 0,
       "vitesse": 2.5,
       "rarete": "Normal",
-      "sprite": "./sprite/valgul_killer"
+      "sprite": "./sprite/legendaire_1.png"
     },
     {
       "id": "52",
@@ -308,7 +285,7 @@
       "mana": 0,
       "vitesse": 1.5,
       "rarete": "epique",
-       "sprite": "./sprite/lance_pourrie"
+      "sprite": "./sprite/legendaire_2.png"
     }
   ]
 }
