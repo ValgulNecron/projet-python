@@ -2,7 +2,8 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import client.src.data.proto_compiled.data.data_pb2 as data__pb2
+import client.src.data.proto_compiled.data.data_pb2 as proto_dot_data__pb2
+
 
 class UserDataStub(object):
     """Missing associated documentation comment in .proto file."""
@@ -15,23 +16,23 @@ class UserDataStub(object):
         """
         self.GetUserData = channel.unary_unary(
                 '/data.UserData/GetUserData',
-                request_serializer=data__pb2.GetUserDataRequest.SerializeToString,
-                response_deserializer=data__pb2.GetUserDataResponse.FromString,
+                request_serializer=proto_dot_data__pb2.GetUserDataRequest.SerializeToString,
+                response_deserializer=proto_dot_data__pb2.GetUserDataResponse.FromString,
                 )
         self.AddUserData = channel.unary_unary(
                 '/data.UserData/AddUserData',
-                request_serializer=data__pb2.AddUserDataRequest.SerializeToString,
-                response_deserializer=data__pb2.AddUserDataResponse.FromString,
+                request_serializer=proto_dot_data__pb2.AddUserDataRequest.SerializeToString,
+                response_deserializer=proto_dot_data__pb2.AddUserDataResponse.FromString,
                 )
         self.UpdateUserData = channel.unary_unary(
                 '/data.UserData/UpdateUserData',
-                request_serializer=data__pb2.UpdateUserDataRequest.SerializeToString,
-                response_deserializer=data__pb2.UpdateUserDataResponse.FromString,
+                request_serializer=proto_dot_data__pb2.UpdateUserDataRequest.SerializeToString,
+                response_deserializer=proto_dot_data__pb2.UpdateUserDataResponse.FromString,
                 )
         self.DeleteUserData = channel.unary_unary(
                 '/data.UserData/DeleteUserData',
-                request_serializer=data__pb2.DeleteUserDataRequest.SerializeToString,
-                response_deserializer=data__pb2.DeleteUserDataResponse.FromString,
+                request_serializer=proto_dot_data__pb2.DeleteUserDataRequest.SerializeToString,
+                response_deserializer=proto_dot_data__pb2.DeleteUserDataResponse.FromString,
                 )
 
 
@@ -67,23 +68,23 @@ def add_UserDataServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetUserData': grpc.unary_unary_rpc_method_handler(
                     servicer.GetUserData,
-                    request_deserializer=data__pb2.GetUserDataRequest.FromString,
-                    response_serializer=data__pb2.GetUserDataResponse.SerializeToString,
+                    request_deserializer=proto_dot_data__pb2.GetUserDataRequest.FromString,
+                    response_serializer=proto_dot_data__pb2.GetUserDataResponse.SerializeToString,
             ),
             'AddUserData': grpc.unary_unary_rpc_method_handler(
                     servicer.AddUserData,
-                    request_deserializer=data__pb2.AddUserDataRequest.FromString,
-                    response_serializer=data__pb2.AddUserDataResponse.SerializeToString,
+                    request_deserializer=proto_dot_data__pb2.AddUserDataRequest.FromString,
+                    response_serializer=proto_dot_data__pb2.AddUserDataResponse.SerializeToString,
             ),
             'UpdateUserData': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateUserData,
-                    request_deserializer=data__pb2.UpdateUserDataRequest.FromString,
-                    response_serializer=data__pb2.UpdateUserDataResponse.SerializeToString,
+                    request_deserializer=proto_dot_data__pb2.UpdateUserDataRequest.FromString,
+                    response_serializer=proto_dot_data__pb2.UpdateUserDataResponse.SerializeToString,
             ),
             'DeleteUserData': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteUserData,
-                    request_deserializer=data__pb2.DeleteUserDataRequest.FromString,
-                    response_serializer=data__pb2.DeleteUserDataResponse.SerializeToString,
+                    request_deserializer=proto_dot_data__pb2.DeleteUserDataRequest.FromString,
+                    response_serializer=proto_dot_data__pb2.DeleteUserDataResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -107,10 +108,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/GetUserData',
-                                             data__pb2.GetUserDataRequest.SerializeToString,
-                                             data__pb2.GetUserDataResponse.FromString,
-                                             options, channel_credentials,
-                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            proto_dot_data__pb2.GetUserDataRequest.SerializeToString,
+            proto_dot_data__pb2.GetUserDataResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def AddUserData(request,
@@ -124,10 +125,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/AddUserData',
-                                             data__pb2.AddUserDataRequest.SerializeToString,
-                                             data__pb2.AddUserDataResponse.FromString,
-                                             options, channel_credentials,
-                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            proto_dot_data__pb2.AddUserDataRequest.SerializeToString,
+            proto_dot_data__pb2.AddUserDataResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def UpdateUserData(request,
@@ -141,10 +142,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/UpdateUserData',
-                                             data__pb2.UpdateUserDataRequest.SerializeToString,
-                                             data__pb2.UpdateUserDataResponse.FromString,
-                                             options, channel_credentials,
-                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            proto_dot_data__pb2.UpdateUserDataRequest.SerializeToString,
+            proto_dot_data__pb2.UpdateUserDataResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def DeleteUserData(request,
@@ -158,10 +159,10 @@ class UserData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.UserData/DeleteUserData',
-                                             data__pb2.DeleteUserDataRequest.SerializeToString,
-                                             data__pb2.DeleteUserDataResponse.FromString,
-                                             options, channel_credentials,
-                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            proto_dot_data__pb2.DeleteUserDataRequest.SerializeToString,
+            proto_dot_data__pb2.DeleteUserDataResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
 
 class ItemDataStub(object):
@@ -175,13 +176,13 @@ class ItemDataStub(object):
         """
         self.GetItemList = channel.unary_unary(
                 '/data.ItemData/GetItemList',
-                request_serializer=data__pb2.GetItemListRequest.SerializeToString,
-                response_deserializer=data__pb2.GetItemListResponse.FromString,
+                request_serializer=proto_dot_data__pb2.GetItemListRequest.SerializeToString,
+                response_deserializer=proto_dot_data__pb2.GetItemListResponse.FromString,
                 )
         self.GetItem = channel.unary_unary(
                 '/data.ItemData/GetItem',
-                request_serializer=data__pb2.GetItemRequest.SerializeToString,
-                response_deserializer=data__pb2.GetItemResponse.FromString,
+                request_serializer=proto_dot_data__pb2.GetItemRequest.SerializeToString,
+                response_deserializer=proto_dot_data__pb2.GetItemResponse.FromString,
                 )
 
 
@@ -205,13 +206,13 @@ def add_ItemDataServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetItemList': grpc.unary_unary_rpc_method_handler(
                     servicer.GetItemList,
-                    request_deserializer=data__pb2.GetItemListRequest.FromString,
-                    response_serializer=data__pb2.GetItemListResponse.SerializeToString,
+                    request_deserializer=proto_dot_data__pb2.GetItemListRequest.FromString,
+                    response_serializer=proto_dot_data__pb2.GetItemListResponse.SerializeToString,
             ),
             'GetItem': grpc.unary_unary_rpc_method_handler(
                     servicer.GetItem,
-                    request_deserializer=data__pb2.GetItemRequest.FromString,
-                    response_serializer=data__pb2.GetItemResponse.SerializeToString,
+                    request_deserializer=proto_dot_data__pb2.GetItemRequest.FromString,
+                    response_serializer=proto_dot_data__pb2.GetItemResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -235,10 +236,10 @@ class ItemData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.ItemData/GetItemList',
-                                             data__pb2.GetItemListRequest.SerializeToString,
-                                             data__pb2.GetItemListResponse.FromString,
-                                             options, channel_credentials,
-                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            proto_dot_data__pb2.GetItemListRequest.SerializeToString,
+            proto_dot_data__pb2.GetItemListResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetItem(request,
@@ -252,10 +253,10 @@ class ItemData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.ItemData/GetItem',
-                                             data__pb2.GetItemRequest.SerializeToString,
-                                             data__pb2.GetItemResponse.FromString,
-                                             options, channel_credentials,
-                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            proto_dot_data__pb2.GetItemRequest.SerializeToString,
+            proto_dot_data__pb2.GetItemResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
 
 class MapDataStub(object):
@@ -269,8 +270,8 @@ class MapDataStub(object):
         """
         self.GetMapData = channel.unary_unary(
                 '/data.MapData/GetMapData',
-                request_serializer=data__pb2.GetMapDataRequest.SerializeToString,
-                response_deserializer=data__pb2.GetMapDataResponse.FromString,
+                request_serializer=proto_dot_data__pb2.GetMapDataRequest.SerializeToString,
+                response_deserializer=proto_dot_data__pb2.GetMapDataResponse.FromString,
                 )
 
 
@@ -288,8 +289,8 @@ def add_MapDataServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetMapData': grpc.unary_unary_rpc_method_handler(
                     servicer.GetMapData,
-                    request_deserializer=data__pb2.GetMapDataRequest.FromString,
-                    response_serializer=data__pb2.GetMapDataResponse.SerializeToString,
+                    request_deserializer=proto_dot_data__pb2.GetMapDataRequest.FromString,
+                    response_serializer=proto_dot_data__pb2.GetMapDataResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -313,7 +314,7 @@ class MapData(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/data.MapData/GetMapData',
-                                             data__pb2.GetMapDataRequest.SerializeToString,
-                                             data__pb2.GetMapDataResponse.FromString,
-                                             options, channel_credentials,
-                                             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            proto_dot_data__pb2.GetMapDataRequest.SerializeToString,
+            proto_dot_data__pb2.GetMapDataResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

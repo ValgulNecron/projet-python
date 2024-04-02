@@ -4,11 +4,6 @@ from tkinter import messagebox
 
 from client.src.client.CreateAccount import CreateAccount
 
-for k in list(os.environ.keys()):
-    if k.lower().endswith('_proxy'):
-        del os.environ[k]
-
-
 def create_account():
     username = username_entry.get()
     password = password_entry.get()
