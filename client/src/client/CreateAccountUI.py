@@ -46,8 +46,13 @@ def signup_ui(root):
             import client.src.client.CreateAccount as CreateAccount
             try:
                 CreateAccount.CreateAccount(email, password, username).create_account()
+                frame.pack_forget()  # Hide the current frame
+                import client.src.client.LoginUI as LoginUI
+                LoginUI.login_ui(root)  # Call the login_ui function with the root window
             except Exception as e:
                 messagebox.showerror("Erreur","Erreur de création de compte \nVeuillez vérifier votre connexion internet et si le compte n'existe pas déjà")
+                frame.pack_forget()  # Hide the current frame
+                signup_ui(root)
     create_button = tk.Button(frame, text="Créer le compte", bg=btn_color, fg=bg_color, font=font_style,
                               command=create_account)
     create_button.grid(row=4, column=1, columnspan=1)

@@ -37,8 +37,13 @@ def login_ui(root):
             # Create a Login object
             try:
                 Login(username, password).login()
+                frame.pack_forget()  # Hide the current frame
+                import client.src.client.AccountInfoUI as AccountInfoUI
+                AccountInfoUI.account_info_ui(root)  # Call the account_info_ui function with the root window
             except Exception as e:
                 messagebox.showerror("Erreur","Erreur de connexion \nVeuillez vérifier votre connexion internet et votre mot de passe")
+                frame.pack_forget()  # Hide the current frame
+                login_ui(root)
 
     create_button = tk.Button(frame, text="Connexion", bg=btn_color, fg=bg_color, font=font_style,
                               command=login)
