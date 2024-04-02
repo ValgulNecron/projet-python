@@ -36,28 +36,35 @@ fn hash_password(password: &[u8], salt: &[u8]) -> String {
     let mut output = [0u8; 1024]; // Example output size
     derive(
         ring::pbkdf2::PBKDF2_HMAC_SHA512,
-        NonZeroU32::new(100_000).unwrap(), // Number of iterations
+        NonZeroU32::new(50_000).unwrap(), // Number of iterations
         salt,
         password,
         &mut output,
     );
     let out = general_purpose::STANDARD.encode(output);
     let salt = general_purpose::STANDARD.encode(salt);
-    format!("pbkdf2_sha512${}${}${}", 100_000, salt, out)
+    format!("pbkdf2_sha512${}${}${}", 50_000, salt, out)
 }
 
-fn verify_password(password: &[u8], hash: &str) -> bool {
+fn verify_password(password: &[u8], hash: String) -> bool {
     let parts: Vec<&str> = hash.split('$').collect();
     if parts.len() != 4 {
         return false;
     }
-    let saved_hash = hash;
     let salt = general_purpose::STANDARD
         .decode(parts[2].as_bytes())
-        .unwrap();    let hash = hash_password(password, &salt);
-    println!("hash: {}", hash);
-    println!("saved_hash: {}", saved_hash);
-    hash == saved_hash
+        .unwrap();
+    let new_hash = hash_password(password, &salt);
+    // Extract the hash part from the newly generated hash string
+    let new_hash_parts: Vec<&str> = new_hash.split('$').collect();
+    if new_hash_parts.len() != 4 {
+        return false;
+    }
+    // Compare only the hashed password part
+    println!("Hash: {:?}", new_hash_parts[3] == parts[3]);
+    println!("Hash: {:?}", new_hash_parts[3]);
+    println!("Hash: {:?}", parts[3]);
+    new_hash_parts[3] == parts[3]
 }
 
 #[tonic::async_trait]
@@ -147,7 +154,7 @@ impl Account for AccountService {
             None => return Err(Status::unauthenticated("Invalid password or username 1012")),
         };
         let password: String = row.get(3);
-        let same_password = verify_password(data.password.as_ref(), password.as_str());
+        let same_password = verify_password(data.password.as_ref(), password);
         let id: String = row.get(0);
         if !same_password {
             return Err(Status::unauthenticated("Invalid password or username 1013"));
