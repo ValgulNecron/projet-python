@@ -1,3 +1,5 @@
+from tkinter import messagebox
+
 import grpc
 
 from client import Global
@@ -20,5 +22,5 @@ class CreateAccount:
             response = stub.CreateAccount(
                 account_pb2.CreateAccountRequest(email=self.email, password=self.password, username=self.username))
         print(response)
+
         Global.ID = response.id
-        print(Global.ID)

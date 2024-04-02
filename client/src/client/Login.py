@@ -1,3 +1,5 @@
+from tkinter import messagebox
+
 import grpc
 
 from client import Global
@@ -18,4 +20,3 @@ class Login:
             response = stub.Login(account_pb2.LoginRequest(username=self.username, password=self.password))
         print(response)
         Global.TOKEN = response.token
-        print(Global.TOKEN)

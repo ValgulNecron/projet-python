@@ -5,6 +5,7 @@ from tkinter import messagebox
 from client.src.client.Login import Login
 
 def login_ui(root):
+    root.title("Connexion")
     # 8-bit style
     bg_color = "#444444"  # Background color
     fg_color = "#FFFFFF"  # Text color
@@ -34,7 +35,10 @@ def login_ui(root):
             messagebox.showerror("Erreur", "Tous les champs sont requis.")
         else:
             # Create a Login object
-            Login(username, password).login()
+            try:
+                Login(username, password).login()
+            except Exception as e:
+                messagebox.showerror("Erreur","Erreur de connexion \nVeuillez vérifier votre connexion internet et votre mot de passe")
 
     create_button = tk.Button(frame, text="Connexion", bg=btn_color, fg=bg_color, font=font_style,
                               command=login)

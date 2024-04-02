@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import messagebox
 def signup_ui(root):
+    root.title("Créer un compte")
     # 8-bit style
     bg_color = "#444444"  # Background color
     fg_color = "#FFFFFF"  # Text color
@@ -43,8 +44,10 @@ def signup_ui(root):
         else:
             # Create an object CreateAccount
             import client.src.client.CreateAccount as CreateAccount
-            CreateAccount.CreateAccount(email, password, username).create_account()
-
+            try:
+                CreateAccount.CreateAccount(email, password, username).create_account()
+            except Exception as e:
+                messagebox.showerror("Erreur","Erreur de création de compte \nVeuillez vérifier votre connexion internet et si le compte n'existe pas déjà")
     create_button = tk.Button(frame, text="Créer le compte", bg=btn_color, fg=bg_color, font=font_style,
                               command=create_account)
     create_button.grid(row=4, column=1, columnspan=1)
