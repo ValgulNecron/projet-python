@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package data;
+
+service UserData {
+    rpc GetUserData (GetUserDataRequest) returns (GetUserDataResponse);
+    rpc AddUserData (AddUserDataRequest) returns (AddUserDataResponse);
+    rpc UpdateUserData (UpdateUserDataRequest) returns (UpdateUserDataResponse);
+    rpc DeleteUserData (DeleteUserDataRequest) returns (DeleteUserDataResponse);
+}
+
+message GetUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+}
+
+message GetUserDataResponse {
+    repeated Item items = 1;
+}
+
+message Item {
+    string id = 1;
+    string nom = 2;
+    int64 force = 3;
+    int64 endurance = 4;
+    int64 intelligence = 5;
+    int64 vitalite = 6;
+    int64 mana = 7;
+    string rarete = 8;
+    float vitesse = 9;
+    bytes sprite = 10;
+    int64 slot = 11;
+}
+
+message AddUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+    Item item = 3;
+}
+
+message AddUserDataResponse {
+    bool success = 1;
+}
+
+message UpdateUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+    Item old_item = 3;
+    Item new_item = 4;
+}
+
+message UpdateUserDataResponse {
+    bool success = 1;
+}
+
+message DeleteUserDataRequest {
+    string user_id = 1;
+    string token = 2;
+    Item item = 3;
+}
+
+message DeleteUserDataResponse {
+    bool success = 1;
+}
+
+
+service ItemData {
+    rpc GetItemList (GetItemListRequest) returns (GetItemListResponse);
+    rpc GetItem (GetItemRequest) returns (GetItemResponse);
+}
+
+message GetItemListRequest {
+    string user_id = 1;
+    string token = 2;
+}
+
+message GetItemListResponse {
+    repeated Item items = 1;
+}
+
+message GetItemRequest {
+    string item_id = 1;
+    string user_id = 2;
+    string token = 3;
+}
+
+message GetItemResponse {
+    Item item = 1;
+}
+
+service MapData {
+    rpc GetMapData(GetMapDataRequest) returns (GetMapDataResponse);
+}
+
+message GetMapDataRequest {
+    string user_id = 1;
+    string token = 2;
+}
+
+message GetMapDataResponse {
+    bytes map_tmx = 1;
+    bytes terrain_atlas_tsx = 2;
+    bytes terrain_atlas_png = 3;
+}
