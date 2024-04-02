@@ -308,7 +308,7 @@
       "mana": 0,
       "vitesse": 1.5,
       "rarete": "epique",
-            "sprite": "./sprite/lance_pourrie"
+       "sprite": "./sprite/lance_pourrie"
     }
   ]
 }
