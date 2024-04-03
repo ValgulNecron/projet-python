@@ -114,7 +114,7 @@ def account_info_ui(root):
         frame.pack_forget()
         root.title("")
         import client.src.map.map as GameUI
-        GameUI.show_map()
+        GameUI.show_map(root)
 
     play_button = tk.Button(frame, text="Jouer", bg=btn_color, fg=bg_color, font=font_style,
                                 command=play)
