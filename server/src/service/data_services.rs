@@ -34,6 +34,7 @@ pub struct DataService {
 #[tonic::async_trait]
 impl UserData for DataService {
     async fn get_user_data(&self, request: Request<GetUserDataRequest>) -> Result<Response<GetUserDataResponse>, Status> {
+        println!("{:?}", self.users_token.read().await);
         let data = request.into_inner();
         if !check_token(data.token.as_str(), data.user_id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
@@ -152,6 +153,8 @@ impl ItemData for DataService {
 impl MapData for DataService {
     async fn get_map_data(&self, request: Request<GetMapDataRequest>) -> Result<Response<GetMapDataResponse>, Status> {
         let data = request.into_inner();
+        println!("{:?}", self.users_token.read().await);
+        println!("{:?}", data);
         if !check_token(data.token.as_str(), data.user_id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
         }
