@@ -166,7 +166,7 @@ impl MapData for DataService {
             Ok(file) => file,
             Err(_) => return Err(Status::internal("Atlas tsx file not found."))
         };
-        let terrain_atlas_png = match fs::read(TMX_FILE) {
+        let terrain_atlas_png = match fs::read(PNG_FILE) {
             Ok(file) => file,
             Err(_) => return Err(Status::internal("Atlas png file not found."))
         };
