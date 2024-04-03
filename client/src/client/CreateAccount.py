@@ -21,6 +21,8 @@ class CreateAccount:
             stub = account_pb2_grpc.AccountStub(channel)
             response = stub.CreateAccount(
                 account_pb2.CreateAccountRequest(email=self.email, password=self.password, username=self.username))
-        print(response)
-
-        Global.ID = response.id
+        if response.created:
+            messagebox.showinfo("Information", "Account created successfully")
+        else:
+            messagebox.showerror("Error", "An error occurred")
+        return response

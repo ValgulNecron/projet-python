@@ -3,9 +3,8 @@ import tkinter as tk
 from tkinter import messagebox
 
 from client import Global
-def ask_for_server_address_ui():
+def ask_for_server_address_ui(root):
     # Create the main window
-    root = tk.Tk()
     root.title("Adresse du serveur")
     root.resizable(False, False)
 

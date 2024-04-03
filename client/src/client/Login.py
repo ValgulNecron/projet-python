@@ -18,5 +18,8 @@ class Login:
         with grpc.insecure_channel(Global.IP) as channel:
             stub = account_pb2_grpc.AccountStub(channel)
             response = stub.Login(account_pb2.LoginRequest(username=self.username, password=self.password))
-        print(response)
+        if response.token == "":
+            messagebox.showerror("Error", "Invalid username or password")
+            return
+        Global.ID = response.id
         Global.TOKEN = response.token
