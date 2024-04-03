@@ -1,12 +1,14 @@
 use std::collections::HashMap;
 use std::fs;
+use std::sync::Arc;
 use tonic::{Request, Response, Status};
 use serde::{Deserialize, Serialize};
 use sqlx::Row;
+use tokio::sync::RwLock;
 use crate::service::data_services::proto::{AddUserDataRequest, AddUserDataResponse, DeleteUserDataRequest, DeleteUserDataResponse, GetItemListRequest, GetItemListResponse, GetItemRequest, GetItemResponse, GetMapDataRequest, GetMapDataResponse, GetUserDataRequest, GetUserDataResponse, Item, UpdateUserDataRequest, UpdateUserDataResponse};
 use crate::service::data_services::proto::map_data_server::{MapData, MapDataServer};
 use crate::service::data_services::proto::user_data_server::{UserData, UserDataServer};
-use crate::service::state::{AccountToken, check_token};
+use crate::service::state::{ check_token};
 use crate::service::data_services::proto::item_data_server::{ItemData, ItemDataServer};
 use crate::sqlite::db::{add_user_data, delete_user_data, get_all_user_data};
 
@@ -25,7 +27,7 @@ pub(crate) mod proto {
 
 #[derive(Debug, Default, Clone)]
 pub struct DataService {
-    pub(crate) users_token: AccountToken,
+    pub(crate) users_token: Arc<RwLock<HashMap<String, String>>>,
     pub(crate) items: HashMap<String, RealItem>,
 }
 
