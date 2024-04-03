@@ -8,6 +8,9 @@ from client import Global
 from client.src.data.proto_compiled.data import data_pb2_grpc, data_pb2
 
 def show_map():
+    print("show_map")
+    print(Global.IP)
+    print(Global.TOKEN)
     with grpc.insecure_channel(Global.IP) as channel:
         stub = data_pb2_grpc.MapDataStub(channel)
         response = stub.GetMapData(

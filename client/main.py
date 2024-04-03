@@ -1,5 +1,6 @@
-import client.src.map.map as map
-
+import client.src.client.ServerUI as UI
+import tkinter as tk
 
 if __name__ == '__main__':
-    map.show_map()
+    root = tk.Tk()
+    UI.ask_for_server_address_ui(root)
