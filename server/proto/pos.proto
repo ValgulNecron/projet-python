@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package pos;
 
-service PosService {
-    rpc GetPos(GetPosRequest) returns (GetPosResponse);
-    rpc UpdatePos(UpdatePosRequest) returns (UpdatePosResponse);
-    rpc GetAllPos(GetAllPosRequest) returns (GetAllPosResponse);
+service PlayerPosService {
+    rpc PlayerGetPos(GetPosRequest) returns (GetPosResponse);
+    rpc PlayerUpdatePos(UpdatePosRequest) returns (UpdatePosResponse);
+    rpc PlayerGetAllPos(GetAllPosRequest) returns (GetAllPosResponse);
 }
 
 message Pos {
