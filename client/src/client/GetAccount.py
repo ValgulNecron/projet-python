@@ -16,4 +16,4 @@ class GetAccount:
         with grpc.insecure_channel(Global.IP) as channel:
             stub = account_pb2_grpc.AccountStub(channel)
             response = stub.GetAccount(account_pb2.GetAccountRequest(id=self.id, token=self.token))
-        print("client received: " + str(response.geted) + ' ' + response.id)
+        return response
