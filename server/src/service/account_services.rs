@@ -1,16 +1,19 @@
+use std::collections::HashMap;
 use std::num::NonZeroU32;
+use std::sync::Arc;
 
 use base64::Engine;
 use base64::engine::general_purpose;
 use rand::random;
 use ring::pbkdf2::derive;
 use sqlx::Row;
+use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
 use uuid::Uuid;
 
 use crate::service::account_services::proto::{DeleteAccountRequest, DeleteAccountResponse, GetAccountRequest, LoginRequest, LoginResponse, UpdateAccountRequest, UpdateAccountResponse};
 use crate::service::account_services::proto::account_server::{Account, AccountServer};
-use crate::service::state::{AccountToken, check_token};
+use crate::service::state::{check_token};
 use crate::sqlite::db::{create_account, delete_account, entry_exists, get_account,  get_account_by_username, update_account};
 
 pub(crate) mod proto {
@@ -22,7 +25,7 @@ pub(crate) mod proto {
 
 #[derive(Debug, Default, Clone)]
 pub struct AccountService {
-    pub(crate) users_token: AccountToken,
+    pub(crate) users_token: Arc<RwLock<HashMap<String, String>>>,
 }
 
 impl AccountService {
@@ -36,28 +39,32 @@ fn hash_password(password: &[u8], salt: &[u8]) -> String {
     let mut output = [0u8; 1024]; // Example output size
     derive(
         ring::pbkdf2::PBKDF2_HMAC_SHA512,
-        NonZeroU32::new(100_000).unwrap(), // Number of iterations
+        NonZeroU32::new(50_000).unwrap(), // Number of iterations
         salt,
         password,
         &mut output,
     );
     let out = general_purpose::STANDARD.encode(output);
     let salt = general_purpose::STANDARD.encode(salt);
-    format!("pbkdf2_sha512${}${}${}", 100_000, salt, out)
+    format!("pbkdf2_sha512${}${}${}", 50_000, salt, out)
 }
 
-fn verify_password(password: &[u8], hash: &str) -> bool {
+fn verify_password(password: &[u8], hash: String) -> bool {
     let parts: Vec<&str> = hash.split('$').collect();
     if parts.len() != 4 {
         return false;
     }
-    let saved_hash = hash;
     let salt = general_purpose::STANDARD
         .decode(parts[2].as_bytes())
-        .unwrap();    let hash = hash_password(password, &salt);
-    println!("hash: {}", hash);
-    println!("saved_hash: {}", saved_hash);
-    hash == saved_hash
+        .unwrap();
+    let new_hash = hash_password(password, &salt);
+    // Extract the hash part from the newly generated hash string
+    let new_hash_parts: Vec<&str> = new_hash.split('$').collect();
+    if new_hash_parts.len() != 4 {
+        return false;
+    }
+    // Compare only the hashed password part
+    new_hash_parts[3] == parts[3]
 }
 
 #[tonic::async_trait]
@@ -66,7 +73,6 @@ impl Account for AccountService {
         &self,
         request: Request<proto::CreateAccountRequest>,
     ) -> Result<Response<proto::CreateAccountResponse>, Status> {
-        println!("Got a request: {:?}", request);
         let data = request.into_inner();
         if entry_exists(data.email.as_str(), data.username.as_str()).await {
             return Err(Status::already_exists("This entry already exist."));
@@ -140,17 +146,16 @@ impl Account for AccountService {
         &self,
         request: Request<LoginRequest>,
     ) -> Result<Response<LoginResponse>, Status> {
-        println!("Got a request: {:?}", request);
         let data = request.into_inner();
         let row = match get_account_by_username(data.username).await {
             Some(row) => row,
-            None => return Err(Status::unauthenticated("Invalid password or username 1012")),
+            None => return Err(Status::unauthenticated("Invalid password or username")),
         };
         let password: String = row.get(3);
-        let same_password = verify_password(data.password.as_ref(), password.as_str());
+        let same_password = verify_password(data.password.as_ref(), password);
         let id: String = row.get(0);
         if !same_password {
-            return Err(Status::unauthenticated("Invalid password or username 1013"));
+            return Err(Status::unauthenticated("Invalid password or username"));
         }
 
         let token = Uuid::new_v4().to_string();

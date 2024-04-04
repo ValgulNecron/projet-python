@@ -1,12 +1,14 @@
 use std::collections::HashMap;
 use std::fs;
+use std::sync::Arc;
 use tonic::{Request, Response, Status};
 use serde::{Deserialize, Serialize};
 use sqlx::Row;
+use tokio::sync::RwLock;
 use crate::service::data_services::proto::{AddUserDataRequest, AddUserDataResponse, DeleteUserDataRequest, DeleteUserDataResponse, GetItemListRequest, GetItemListResponse, GetItemRequest, GetItemResponse, GetMapDataRequest, GetMapDataResponse, GetUserDataRequest, GetUserDataResponse, Item, UpdateUserDataRequest, UpdateUserDataResponse};
 use crate::service::data_services::proto::map_data_server::{MapData, MapDataServer};
 use crate::service::data_services::proto::user_data_server::{UserData, UserDataServer};
-use crate::service::state::{AccountToken, check_token};
+use crate::service::state::{ check_token};
 use crate::service::data_services::proto::item_data_server::{ItemData, ItemDataServer};
 use crate::sqlite::db::{add_user_data, delete_user_data, get_all_user_data};
 
@@ -25,13 +27,14 @@ pub(crate) mod proto {
 
 #[derive(Debug, Default, Clone)]
 pub struct DataService {
-    pub(crate) users_token: AccountToken,
+    pub(crate) users_token: Arc<RwLock<HashMap<String, String>>>,
     pub(crate) items: HashMap<String, RealItem>,
 }
 
 #[tonic::async_trait]
 impl UserData for DataService {
     async fn get_user_data(&self, request: Request<GetUserDataRequest>) -> Result<Response<GetUserDataResponse>, Status> {
+        println!("{:?}", self.users_token.read().await);
         let data = request.into_inner();
         if !check_token(data.token.as_str(), data.user_id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
@@ -150,6 +153,8 @@ impl ItemData for DataService {
 impl MapData for DataService {
     async fn get_map_data(&self, request: Request<GetMapDataRequest>) -> Result<Response<GetMapDataResponse>, Status> {
         let data = request.into_inner();
+        println!("{:?}", self.users_token.read().await);
+        println!("{:?}", data);
         if !check_token(data.token.as_str(), data.user_id.as_str(), &self.users_token).await {
             return Err(Status::unauthenticated("Invalid token"));
         }
@@ -161,7 +166,7 @@ impl MapData for DataService {
             Ok(file) => file,
             Err(_) => return Err(Status::internal("Atlas tsx file not found."))
         };
-        let terrain_atlas_png = match fs::read(TMX_FILE) {
+        let terrain_atlas_png = match fs::read(PNG_FILE) {
             Ok(file) => file,
             Err(_) => return Err(Status::internal("Atlas png file not found."))
         };
