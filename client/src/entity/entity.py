@@ -10,6 +10,10 @@ screen = pygame.display.set_mode((800, 600))
 # Load the Tiled map
 tmx_data = load_pygame("map.tmx")
 
+# Camera variables
+cameraX = 0
+cameraY = 0
+
 # Base Entity Class
 class Entity(pygame.sprite.Sprite):
     def __init__(self, image_path, x, y):
@@ -20,13 +24,12 @@ class Entity(pygame.sprite.Sprite):
         self.rect.y = y
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        screen.blit(self.image, (self.rect.x - cameraX, self.rect.y - cameraY))
 
 # Player Class
 class Player(Entity):
     def __init__(self, image_path, x, y):
         super().__init__(image_path, x, y)
-        # Additional player-specific attributes or methods
 
 # Monster Class
 class Monster(Entity):
@@ -38,23 +41,25 @@ class Monster(Entity):
     def move(self):
         direction_list = ((-1, 0), (1, 0), (0, -1), (0, 1))
         dx, dy = direction_list[self.direction]
-        self.rect.x += dx
-        self.rect.y += dy
+        next_x = self.rect.x + dx
+        next_y = self.rect.y + dy
 
-        # Collision detection with walls or other monsters
-        # Assuming 'walls' is a list of wall rectangles
+        # Check for collisions with collision_objects
+        next_rect = pygame.Rect(next_x, next_y, self.rect.width, self.rect.height)
+        for obj_rect in collision_objects:
+            if next_rect.colliderect(obj_rect):
+                return # Do not move if the next position would collide with a collision_object
+
+        # Check for collisions with other monsters
         collide = False
-        for wall in walls:
-            if self.rect.colliderect(wall.rect):
+        for wall in monsters:
+            if wall != self and wall.rect.colliderect(next_rect):
                 collide = True
-                if dx > 0: # Moving right, hit the left side of wall
-                    self.rect.right = wall.rect.left
-                if dx < 0: # Moving left, hit the right side of wall
-                    self.rect.left = wall.rect.right
-                if dy > 0: # Moving down, hit the top side of wall
-                    self.rect.bottom = wall.rect.top
-                if dy < 0: # Moving up, hit the bottom side of wall
-                    self.rect.top = wall.rect.bottom
+                break
+
+        if not collide:
+            self.rect.x = next_x
+            self.rect.y = next_y
 
         self.steps -= 1
         if collide or self.steps == 0:
@@ -63,19 +68,30 @@ class Monster(Entity):
             self.steps = random.randint(3, 6) * 32
 
 # Spawn the player on a fixed tile
-player = Player('player_image.png', 400, 300) # Example fixed position
+player = Player('Player.png', 400, 300) # Example fixed position
 
 # Spawn monsters randomly within the map bounds
 monsters = pygame.sprite.Group()
 for _ in range(10): # Spawn 10 monsters
     x = random.randint(0, tmx_data.width * tmx_data.tilewidth)
     y = random.randint(0, tmx_data.height * tmx_data.tileheight)
-    monster = Monster('monster_image.png', x, y)
+    monster = Monster('monstre1.png', x, y)
     monsters.add(monster)
 
 # Create a group for players
 all_players = pygame.sprite.Group()
 all_players.add(player)
+
+# Initialize collision_objects list
+collision_objects = []
+
+# Populate collision_objects with objects marked for collision
+for layer in tmx_data.visible_layers:
+    if isinstance(layer, pytmx.TiledObjectGroup):
+        for obj in layer:
+            if obj.properties.get('collision', False):
+                obj_rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                collision_objects.append(obj_rect)
 
 # Game Loop
 running = True
@@ -87,6 +103,10 @@ while running:
     # Clear the screen
     screen.fill((0, 0, 0))
 
+    # Update camera position based on player's position
+    cameraX = player.rect.x - screen.get_width() // 2
+    cameraY = player.rect.y - screen.get_height() // 2
+
     # Draw the player and monsters
     player.draw(screen)
     monsters.draw(screen)
@@ -97,7 +117,7 @@ while running:
             for x, y, gid, in layer:
                 tile = tmx_data.get_tile_image_by_gid(gid)
                 if tile:
-                    screen.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
+                    screen.blit(tile, (x * tmx_data.tilewidth - cameraX, y * tmx_data.tileheight - cameraY))
 
     # Update the display
     pygame.display.flip()
