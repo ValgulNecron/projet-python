@@ -1,5 +1,4 @@
 import os
-
 import pytmx
 import pygame
 import grpc
@@ -8,13 +7,13 @@ from client import Global
 from client.src.data.proto_compiled.data import data_pb2_grpc, data_pb2
 
 def show_map(root):
-    root.withdraw()  # Hide the current window
+    root.withdraw() # Hide the current window
     with grpc.insecure_channel(Global.IP) as channel:
         stub = data_pb2_grpc.MapDataStub(channel)
         response = stub.GetMapData(
             data_pb2.GetMapDataRequest(user_id=Global.ID, token=Global.TOKEN))
 
-    # save the map data to a file
+    # Save the map data to a file
     with open('map.tmx', 'wb') as f:
         f.write(response.map_tmx)
     with open('terrain_atlas.tsx', 'wb') as f:
@@ -40,14 +39,14 @@ def show_map(root):
             if event.type == pygame.QUIT:
                 running = False
 
-    # remove the map data file
+    # Remove the map data file
     os.remove('map.tmx')
     os.remove('terrain_atlas.tsx')
     os.remove('terrain_atlas.png')
     pygame.quit()
-    root.deiconify()  # Show the window
+    root.deiconify() # Show the window
     import client.src.client.AccountInfoUI as AccountInfoUI
-    AccountInfoUI.account_info_ui(root)  # Call the account_info_ui function with the root window
+    AccountInfoUI.account_info_ui(root) # Call the account_info_ui function with the root window
 
 if __name__ == '__main__':
     for k in list(os.environ.keys()):
