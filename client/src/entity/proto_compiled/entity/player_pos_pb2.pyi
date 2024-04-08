@@ -14,18 +14,14 @@ class PosWrapper(_message.Message):
     def __init__(self, user_id: _Optional[str] = ..., pos: _Optional[_Union[Pos, _Mapping]] = ...) -> None: ...
 
 class Pos(_message.Message):
-    __slots__ = ("pos_x", "pos_y", "velocity_x", "velocity_y", "last_update")
+    __slots__ = ("pos_x", "pos_y", "last_update")
     POS_X_FIELD_NUMBER: _ClassVar[int]
     POS_Y_FIELD_NUMBER: _ClassVar[int]
-    VELOCITY_X_FIELD_NUMBER: _ClassVar[int]
-    VELOCITY_Y_FIELD_NUMBER: _ClassVar[int]
     LAST_UPDATE_FIELD_NUMBER: _ClassVar[int]
     pos_x: int
     pos_y: int
-    velocity_x: int
-    velocity_y: int
     last_update: int
-    def __init__(self, pos_x: _Optional[int] = ..., pos_y: _Optional[int] = ..., velocity_x: _Optional[int] = ..., velocity_y: _Optional[int] = ..., last_update: _Optional[int] = ...) -> None: ...
+    def __init__(self, pos_x: _Optional[int] = ..., pos_y: _Optional[int] = ..., last_update: _Optional[int] = ...) -> None: ...
 
 class GetPosRequest(_message.Message):
     __slots__ = ("user_id", "token")

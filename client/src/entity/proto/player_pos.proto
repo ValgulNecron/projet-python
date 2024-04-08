@@ -16,9 +16,7 @@ message PosWrapper {
 message Pos {
     uint64 pos_x = 1;
     uint64 pos_y = 2;
-    uint64 velocity_x = 3;
-    uint64 velocity_y = 4;
-    uint64 last_update = 5;
+    uint64 last_update = 3;
 }
 
 message GetPosRequest {
