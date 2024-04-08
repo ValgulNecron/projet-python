@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import client.src.data.proto_compiled.data.data_pb2 as proto_dot_data__pb2
+import client.src.data.proto_compiled.data.data_pb2 as data__pb2
 
 
 class UserDataStub(object):

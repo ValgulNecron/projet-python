@@ -2,8 +2,6 @@ use std::collections::HashMap;
 use std::sync::{Arc};
 use tokio::sync::RwLock;
 use tonic::{Request, Response, Status};
-use crate::service::data_services::DataService;
-use crate::service::data_services::proto::user_data_server::UserDataServer;
 use crate::service::player_pos_service::proto::{GetAllPosRequest, GetAllPosResponse, GetPosRequest, GetPosResponse, Pos,
                                                 UpdatePosRequest, UpdatePosResponse, PosWrapper};
 use crate::service::player_pos_service::proto::player_pos_service_server::{PlayerPosService, PlayerPosServiceServer};
@@ -21,8 +19,6 @@ pub struct UserPos {
     pub x: u64,
     pub y: u64,
     pub last_update: u64,
-    pub velocity_y: u64,
-    pub velocity_x: u64,
 }
 
 pub struct PlayerPosServerService {
@@ -49,8 +45,6 @@ impl PlayerPosService for PlayerPosServerService {
             pos: Some(Pos {
                 pos_x: actual_pos.x.clone(),
                 pos_y: actual_pos.y.clone(),
-                velocity_x: actual_pos.velocity_x.clone(),
-                velocity_y: actual_pos.velocity_y.clone(),
                 last_update: actual_pos.last_update.clone(),
             }),
         };
@@ -75,8 +69,6 @@ impl PlayerPosService for PlayerPosServerService {
             x: pos.pos_x,
             y: pos.pos_y,
             last_update: last_update as u64,
-            velocity_y: pos.velocity_y,
-            velocity_x: pos.velocity_x,
         });
 
         Ok(Response::new(UpdatePosResponse { success: true }))
@@ -97,8 +89,6 @@ impl PlayerPosService for PlayerPosServerService {
                 pos: Some(Pos {
                     pos_x: pos.x.clone(),
                     pos_y: pos.y.clone(),
-                    velocity_x: pos.velocity_x.clone(),
-                    velocity_y: pos.velocity_y.clone(),
                     last_update: pos.last_update.clone(),
                 }),
             });
