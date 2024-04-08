@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package player_pos;
+
+service PlayerPosService {
+    rpc PlayerGetPos(GetPosRequest) returns (GetPosResponse);
+    rpc PlayerUpdatePos(UpdatePosRequest) returns (UpdatePosResponse);
+    rpc PlayerGetAllPos(GetAllPosRequest) returns (GetAllPosResponse);
+}
+
+message PosWrapper {
+    string user_id = 1;
+    Pos pos = 2;
+}
+
+message Pos {
+    uint64 pos_x = 1;
+    uint64 pos_y = 2;
+    uint64 velocity_x = 3;
+    uint64 velocity_y = 4;
+    uint64 last_update = 5;
+}
+
+message GetPosRequest {
+    string user_id = 1;
+    string token = 2;
+}
+
+message GetPosResponse {
+    string user_id = 1;
+    Pos pos = 2;
+}
+
+message UpdatePosRequest {
+    string user_id = 1;
+    string token = 2;
+    Pos pos = 3;
+}
+
+message UpdatePosResponse {
+    bool success = 1;
+}
+
+message GetAllPosRequest {
+    string user_id = 1;
+    string token = 2;
+}
+
+message GetAllPosResponse {
+    repeated PosWrapper pos = 1;
+}

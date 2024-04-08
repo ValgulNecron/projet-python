@@ -21,15 +21,16 @@ message GetUserDataResponse {
 message Item {
     string id = 1;
     string nom = 2;
-    int64 force = 3;
-    int64 endurance = 4;
-    int64 intelligence = 5;
-    int64 vitalite = 6;
-    int64 mana = 7;
-    string rarete = 8;
-    float vitesse = 9;
-    bytes sprite = 10;
-    int64 slot = 11;
+    string type = 3;
+    int64 force = 4;
+    int64 endurance = 5;
+    int64 intelligence = 6;
+    int64 vitalite = 7;
+    int64 mana = 8;
+    string rarete = 9;
+    float vitesse = 10;
+    bytes sprite = 11;
+    int64 slot = 12;
 }
 
 message AddUserDataRequest {

@@ -49,6 +49,7 @@ impl UserData for DataService {
                 Item {
                     id: item.id.clone(),
                     nom: item.nom.clone(),
+                    r#type: item.r#type.clone(),
                     force: item.force,
                     endurance: item.endurance,
                     intelligence: item.intelligence,
@@ -199,6 +200,7 @@ pub fn load_all_item_from_json() -> HashMap<String, RealItem> {
         RealItem {
             id: item.id,
             nom: item.nom,
+            r#type: item.r#type.clone(),
             force: item.force,
             endurance: item.endurance,
             intelligence: item.intelligence,
@@ -229,6 +231,7 @@ pub struct ItemTempTempUseless {
 pub struct ItemTemp {
     pub id: String,
     pub nom: String,
+    pub r#type: String,
     pub force: i64,
     pub endurance: i64,
     pub intelligence: i64,
@@ -244,6 +247,7 @@ pub struct ItemTemp {
 pub struct RealItem {
     pub id: String,
     pub nom: String,
+    pub r#type: String,
     pub force: i64,
     pub endurance: i64,
     pub intelligence: i64,
@@ -261,6 +265,7 @@ impl From<RealItem> for Item {
         Item {
             id: item.id,
             nom: item.nom,
+            r#type: item.r#type.clone(),
             force: item.force,
             endurance: item.endurance,
             intelligence: item.intelligence,
@@ -279,6 +284,7 @@ impl From<Item> for RealItem {
         RealItem {
             id: item.id,
             nom: item.nom,
+            r#type: item.r#type.clone(),
             force: item.force,
             endurance: item.endurance,
             intelligence: item.intelligence,
@@ -297,6 +303,7 @@ impl From<&Item> for RealItem {
         RealItem {
             id: item.id.clone(),
             nom: item.nom.clone(),
+            r#type: item.r#type.clone(),
             force: item.force,
             endurance: item.endurance,
             intelligence: item.intelligence,
@@ -315,6 +322,7 @@ impl From<&RealItem> for Item {
         Item {
             id: item.id.clone(),
             nom: item.nom.clone(),
+            r#type: item.r#type.clone(),
             force: item.force,
             endurance: item.endurance,
             intelligence: item.intelligence,
