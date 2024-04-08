@@ -1,0 +1,26 @@
+import json
+
+class Inventaire:
+    def __init__(self):
+        self.items = {}  # Change to a dictionary to store items by ID
+        self.inventaire_joueur = []
+    
+    def charger_items_depuis_json(self, json_data):
+        # Charge les items du JSON et les stocke dans le dictionnaire 'items'
+        self.items = json.loads(json_data)
+    
+    def ajouter_item_a_inventaire(self, id_item):
+        # Vérifie si l'ID de l'item existe dans les items chargés
+        if id_item in self.items:
+            self.inventaire_joueur.append(self.items[id_item])
+            print(f"Item '{self.items[id_item]['nom']}' ajouté à l'inventaire.")
+        else:
+            print("Cet item n'existe pas.")
+    
+    def afficher_inventaire(self):
+        if self.inventaire_joueur:
+            print("Inventaire du joueur:")
+            for item in self.inventaire_joueur:
+                print(f"- {item['nom']} (Force: {item['force']}, Endurance: {item['endurance']})")
+        else:
+            print("L'inventaire est vide.")
