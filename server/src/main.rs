@@ -6,6 +6,11 @@ use crate::service::account_services::{
 };
 use tonic::transport::Server;
 use crate::service::data_services::{DataService, get_item_service, get_map_service, get_user_service, load_all_item_from_json};
+use std::fs;
+use std::path::Path;
+use std::process::Command;
+use rcgen::{Certificate, RcgenError};
+use crate::service::player_pos_service::{get_pos_service, PlayerPosServerService, UserPos};
 
 use crate::sqlite::db::create_database_and_database_file;
 
@@ -39,6 +44,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         items: map,
     };
 
+    let mut users_pos: Arc<RwLock<HashMap<String, UserPos>>> = Arc::new(RwLock::new(HashMap::new()));
+    let player_pos = PlayerPosServerService {
+        users_pos: users_pos.clone(),
+        users_token: account_token.clone(),
+    };
+
+    // run the cleaner function in a separate task
+    tokio::spawn(cleaner(account_token.clone(), users_pos.clone()));
+
     let reflection = tonic_reflection::server::Builder::configure()
         .register_encoded_file_descriptor_set(service::account_services::proto::FILE_DESCRIPTOR_SET)
         .register_encoded_file_descriptor_set(service::data_services::proto::FILE_DESCRIPTOR_SET)
@@ -49,8 +63,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .add_service(get_item_service(data_service_item))
         .add_service(get_map_service(data_service_map))
         .add_service(get_user_service(data_service_user))
+        .add_service(get_pos_service(player_pos))
         .serve(addr)
         .await?;
     println!("Server running on {}", addr);
     Ok(())
+}
+
+async fn cleaner(users_token: Arc<RwLock<HashMap<String, String>>>, player_pos: Arc<RwLock<HashMap<String, UserPos>>>) {
+    loop {
+        let actual_pos = player_pos.read().await;
+        let actual_pos = actual_pos.clone();
+        for (id, pos) in &actual_pos {
+            if pos.last_update + 600 < chrono::Utc::now().timestamp() as u64 {
+                let mut actual_pos = player_pos.write().await;
+                actual_pos.remove(id);
+                let mut actual_token = users_token.write().await;
+                actual_token.remove(id);
+            }
+        }
+    }
 }
