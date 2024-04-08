@@ -2,6 +2,7 @@ import os
 import pytmx
 import pygame
 import grpc
+from client.src.entity.entity import play
 
 from client import Global
 from client.src.data.proto_compiled.data import data_pb2_grpc, data_pb2
@@ -22,7 +23,10 @@ def show_map(root):
         f.write(response.terrain_atlas_png)
     pygame.init()
 
-    screen = pygame.display.set_mode((800, 600)) # Creates a 800x600 window
+    screen = pygame.display.set_mode()
+    screen_width, screen_height = screen.get_size()
+    screen = pygame.display.set_mode((screen_width, screen_height), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+
 
     tmx_data = pytmx.util_pygame.load_pygame('map.tmx')
     for layer in tmx_data.visible_layers:
@@ -31,13 +35,7 @@ def show_map(root):
                 tile = tmx_data.get_tile_image_by_gid(gid)
                 if tile:
                     screen.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            pygame.display.update()
-            if event.type == pygame.QUIT:
-                running = False
+    play(screen,tmx_data)
 
     # Remove the map data file
     os.remove('map.tmx')
