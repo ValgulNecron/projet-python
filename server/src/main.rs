@@ -9,8 +9,7 @@ use crate::service::data_services::{DataService, get_item_service, get_map_servi
 use std::fs::File;
 use std::io::BufReader;
 use crate::service::player_pos_service::{get_pos_service, PlayerPosServerService, UserPos};
-use rustls::internal::pemfile::{certs, rsa_private_keys};
-use rustls::{NoClientAuth, ServerConfig};
+
 
 use crate::sqlite::db::create_database_and_database_file;
 
@@ -53,13 +52,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // run the cleaner function in a separate task
     tokio::spawn(cleaner(account_token.clone(), users_pos.clone()));
 
-    let cert_file = File::open("cert.pem")?;
-    let key_file = File::open("key.pem")?;
-    let cert_file = BufReader::new(cert_file);
-    let key_file = BufReader::new(key_file);
-    let cert_chain = certs(cert_file).unwrap();
-    let mut keys = rsa_private_keys(key_file).unwrap();
-
     let reflection = tonic_reflection::server::Builder::configure()
         .register_encoded_file_descriptor_set(service::account_services::proto::FILE_DESCRIPTOR_SET)
         .register_encoded_file_descriptor_set(service::data_services::proto::FILE_DESCRIPTOR_SET)
@@ -90,18 +82,4 @@ async fn cleaner(users_token: Arc<RwLock<HashMap<String, String>>>, player_pos: 
             }
         }
     }
-}
-
-fn load_tls_config() -> Result<ServerConfig, Box<dyn std::error::Error>> {
-    let cert_file = File::open("cert.pem")?;
-    let key_file = File::open("key.pem")?;
-    let cert_file = BufReader::new(cert_file);
-    let key_file = BufReader::new(key_file);
-    let cert_chain = certs(cert_file).unwrap();
-    let mut keys = rsa_private_keys(key_file).unwrap();
-
-    let mut config = ServerConfig::new(NoClientAuth::new());
-    config.set_single_cert(cert_chain, keys.remove(0)).unwrap();
-
-    Ok(config)
 }
