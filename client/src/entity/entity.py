@@ -69,7 +69,15 @@ def play(screen, tmx_data):
     for _ in range(10): # Spawn 10 monsters
         x = random.randint(0, tmx_data.width * tmx_data.tilewidth)
         y = random.randint(0, tmx_data.height * tmx_data.tileheight)
-        monster = Monster('monstre1.png', x, y)
+        i=random.randint(1,5)
+        if i==1:
+              monster = Monster('monstre1.png', x, y)
+        if i==2:
+            monster = Monster('monstre2.png', x, y)
+        if i==3:
+            monster = Monster('monstre3.png', x, y)
+        if i==4:
+            monster = Monster('monstre4.png', x, y)
         monsters.add(monster)
 
     # Create a group for players
