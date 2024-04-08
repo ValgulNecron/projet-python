@@ -15,5 +15,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         .compile(&["proto/data.proto"], &["proto"])?;
 
     tonic_build::compile_protos("proto/data.proto")?;
+
+    tonic_build::configure()
+        .file_descriptor_set_path(out_dir.join("player_pos_descriptor.bin"))
+        .compile(&["proto/player_pos.proto"], &["proto"])?;
+
+    tonic_build::compile_protos("proto/player_pos.proto")?;
+
     Ok(())
 }

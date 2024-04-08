@@ -20,9 +20,10 @@ class GetUserDataResponse(_message.Message):
     def __init__(self, items: _Optional[_Iterable[_Union[Item, _Mapping]]] = ...) -> None: ...
 
 class Item(_message.Message):
-    __slots__ = ("id", "nom", "force", "endurance", "intelligence", "vitalite", "mana", "rarete", "vitesse", "sprite", "slot")
+    __slots__ = ("id", "nom", "type", "force", "endurance", "intelligence", "vitalite", "mana", "rarete", "vitesse", "sprite", "slot")
     ID_FIELD_NUMBER: _ClassVar[int]
     NOM_FIELD_NUMBER: _ClassVar[int]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
     FORCE_FIELD_NUMBER: _ClassVar[int]
     ENDURANCE_FIELD_NUMBER: _ClassVar[int]
     INTELLIGENCE_FIELD_NUMBER: _ClassVar[int]
@@ -34,16 +35,17 @@ class Item(_message.Message):
     SLOT_FIELD_NUMBER: _ClassVar[int]
     id: str
     nom: str
+    type: str
     force: int
     endurance: int
     intelligence: int
     vitalite: int
     mana: int
-    rarete: int
+    rarete: str
     vitesse: float
     sprite: bytes
     slot: int
-    def __init__(self, id: _Optional[str] = ..., nom: _Optional[str] = ..., force: _Optional[int] = ..., endurance: _Optional[int] = ..., intelligence: _Optional[int] = ..., vitalite: _Optional[int] = ..., mana: _Optional[int] = ..., rarete: _Optional[int] = ..., vitesse: _Optional[float] = ..., sprite: _Optional[bytes] = ..., slot: _Optional[int] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., nom: _Optional[str] = ..., type: _Optional[str] = ..., force: _Optional[int] = ..., endurance: _Optional[int] = ..., intelligence: _Optional[int] = ..., vitalite: _Optional[int] = ..., mana: _Optional[int] = ..., rarete: _Optional[str] = ..., vitesse: _Optional[float] = ..., sprite: _Optional[bytes] = ..., slot: _Optional[int] = ...) -> None: ...
 
 class AddUserDataRequest(_message.Message):
     __slots__ = ("user_id", "token", "item")
