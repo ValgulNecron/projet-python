@@ -1,10 +1,9 @@
-
 {
   "weapons": [
     {
       "id": "epee_1",
       "nom": "Epee du troubadour",
-      "type":"arme",
+      "type": "arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
@@ -17,7 +16,7 @@
     {
       "id": "epee_2",
       "nom": "Epee du pauvre",
-      "type":"arme",
+      "type": "arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 0,
@@ -30,7 +29,7 @@
     {
       "id": "epee_3",
       "nom": "Epee du fermier",
-      "type":"arme",
+      "type": "arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
@@ -43,7 +42,7 @@
     {
       "id": "lance_1",
       "nom": "lance avec bout tres pointu",
-      "type":"arme",
+      "type": "arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
@@ -56,7 +55,7 @@
     {
       "id": "lance_2",
       "nom": "lance de festivalier",
-      "type":"arme",
+      "type": "arme",
       "force": 9,
       "endurance": 0,
       "intelligence": 3,
@@ -69,7 +68,7 @@
     {
       "id": "lance_3",
       "nom": "lance en carton",
-      "type":"arme",
+      "type": "arme",
       "force": 5,
       "endurance": 5,
       "intelligence": 5,
@@ -82,7 +81,7 @@
     {
       "id": "masse_1",
       "nom": "Masse du troubadour",
-      "type":"arme",
+      "type": "arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
@@ -94,7 +93,7 @@
     {
       "id": "masse_2",
       "nom": "Super Matraque",
-      "type":"arme",
+      "type": "arme",
       "force": 5,
       "endurance": 6,
       "intelligence": 5,
@@ -106,7 +105,7 @@
     {
       "id": "masse_3",
       "nom": "gros cailloux brillant",
-      "type":"arme",
+      "type": "arme",
       "force": 30,
       "endurance": 6,
       "intelligence": 25,
@@ -119,7 +118,7 @@
     {
       "id": "plastron_1",
       "nom": "Un plastron en tissu",
-      "type":"armure", 
+      "type": "armure",
       "force": 3,
       "endurance": 10,
       "intelligence": 5,
@@ -132,7 +131,7 @@
     {
       "id": "plastron_2",
       "nom": "Plastron de l'aventurier",
-      "type":"armure", 
+      "type": "armure",
       "force": 5,
       "endurance": 12,
       "intelligence": 7,
@@ -145,7 +144,7 @@
     {
       "id": "plastron_3",
       "nom": "Cuirasse du guerrier",
-      "type":"armure", 
+      "type": "armure",
       "force": 8,
       "endurance": 15,
       "intelligence": 2,
@@ -158,7 +157,7 @@
     {
       "id": "plastron_4",
       "nom": "Haubert mystique",
-      "type":"armure",
+      "type": "armure",
       "force": 4,
       "endurance": 8,
       "intelligence": 15,
@@ -171,7 +170,7 @@
     {
       "id": "plastron_5",
       "nom": "Tunique des ombres",
-      "type":"armure", 
+      "type": "armure",
       "force": 3,
       "endurance": 9,
       "intelligence": 18,
@@ -184,7 +183,7 @@
     {
       "id": "jambiere_1",
       "nom": "jambiere en tissu",
-      "type":"armure", 
+      "type": "armure",
       "force": 3,
       "endurance": 9,
       "intelligence": 0,
@@ -197,7 +196,7 @@
     {
       "id": "jambiere_2",
       "nom": "Jambieres de l'agilite",
-      "type":"armure", 
+      "type": "armure",
       "force": 2,
       "endurance": 7,
       "intelligence": 4,
@@ -210,7 +209,7 @@
     {
       "id": "jambiere_3",
       "nom": "Greves du guerrier",
-      "type":"armure", 
+      "type": "armure",
       "force": 5,
       "endurance": 10,
       "intelligence": 0,
@@ -223,7 +222,7 @@
     {
       "id": "bottes_1",
       "nom": "Bottes de vitesse",
-      "type":"armure", 
+      "type": "armure",
       "force": 1,
       "endurance": 5,
       "intelligence": 2,
@@ -236,7 +235,7 @@
     {
       "id": "bottes_2",
       "nom": "Bottes du marcheur nocturne",
-      "type":"armure", 
+      "type": "armure",
       "force": 2,
       "endurance": 4,
       "intelligence": 3,
@@ -249,7 +248,7 @@
     {
       "id": "bottes_3",
       "nom": "Bottes d'endurance",
-      "type":"armure", 
+      "type": "armure",
       "force": 0,
       "endurance": 8,
       "intelligence": 1,
@@ -262,7 +261,7 @@
     {
       "id": "bottes_4",
       "nom": "Bottes de l'explorateur",
-      "type":"armure", 
+      "type": "armure",
       "force": 3,
       "endurance": 3,
       "intelligence": 5,
@@ -275,7 +274,7 @@
     {
       "id": "bottes_5",
       "nom": "Bottes légères",
-      "type":"armure", 
+      "type": "armure",
       "force": 2,
       "endurance": 2,
       "intelligence": 2,
@@ -288,7 +287,7 @@
     {
       "id": "51",
       "nom": "Tueur de Valgul",
-      "type":"armure", 
+      "type": "armure",
       "force": 60,
       "endurance": 50,
       "intelligence": 0,
@@ -301,7 +300,7 @@
     {
       "id": "52",
       "nom": "Lance de la destinee pourrie",
-      "type":"armure", 
+      "type": "armure",
       "force": 75,
       "endurance": 0,
       "intelligence": 0,

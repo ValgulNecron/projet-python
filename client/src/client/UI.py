@@ -1,8 +1,8 @@
-import os
 import tkinter as tk
 from tkinter import messagebox
 
 from client.src.client.CreateAccount import CreateAccount
+
 
 def create_account():
     username = username_entry.get()

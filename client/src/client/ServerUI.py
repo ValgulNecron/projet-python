@@ -1,8 +1,9 @@
-import os
 import tkinter as tk
 from tkinter import messagebox
 
 from client import Global
+
+
 def ask_for_server_address_ui(root):
     # Create the main window
     root.title("Adresse du serveur")

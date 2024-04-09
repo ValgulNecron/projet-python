@@ -3,6 +3,7 @@ import time
 
 class MusicManagement():
     stop = False
+
     def run(self):
         while not self.stop:
             print("Playing music")

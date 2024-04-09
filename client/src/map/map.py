@@ -1,11 +1,13 @@
 import os
-import pytmx
-import pygame
+
 import grpc
-from client.src.entity.entity import play
+import pygame
+import pytmx
 
 from client import Global
 from client.src.data.proto_compiled.data import data_pb2_grpc, data_pb2
+from client.src.entity.entity import play
+
 
 def show_map(root, music_thread, music_manager):
     root.withdraw()  # Hide the current window
@@ -25,8 +27,8 @@ def show_map(root, music_thread, music_manager):
 
     screen = pygame.display.set_mode()
     screen_width, screen_height = screen.get_size()
-    screen = pygame.display.set_mode((screen_width, screen_height), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
-
+    screen = pygame.display.set_mode((screen_width, screen_height),
+                                     pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
 
     tmx_data = pytmx.util_pygame.load_pygame('map.tmx')
     for layer in tmx_data.visible_layers:
@@ -35,7 +37,7 @@ def show_map(root, music_thread, music_manager):
                 tile = tmx_data.get_tile_image_by_gid(gid)
                 if tile:
                     screen.blit(tile, (x * tmx_data.tilewidth, y * tmx_data.tileheight))
-    play(screen,tmx_data)
+    play(screen, tmx_data)
 
     # Remove the map data file
     os.remove('map.tmx')

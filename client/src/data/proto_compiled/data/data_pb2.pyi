@@ -1,9 +1,12 @@
-from google.protobuf.internal import containers as _containers
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, \
+    Union as _Union
+
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from google.protobuf.internal import containers as _containers
 
 DESCRIPTOR: _descriptor.FileDescriptor
+
 
 class GetUserDataRequest(_message.Message):
     __slots__ = ("user_id", "token")
@@ -11,16 +14,22 @@ class GetUserDataRequest(_message.Message):
     TOKEN_FIELD_NUMBER: _ClassVar[int]
     user_id: str
     token: str
+
     def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ...) -> None: ...
+
 
 class GetUserDataResponse(_message.Message):
     __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[Item]
+
     def __init__(self, items: _Optional[_Iterable[_Union[Item, _Mapping]]] = ...) -> None: ...
 
+
 class Item(_message.Message):
-    __slots__ = ("id", "nom", "type", "force", "endurance", "intelligence", "vitalite", "mana", "rarete", "vitesse", "sprite", "slot")
+    __slots__ = (
+    "id", "nom", "type", "force", "endurance", "intelligence", "vitalite", "mana", "rarete", "vitesse", "sprite",
+    "slot")
     ID_FIELD_NUMBER: _ClassVar[int]
     NOM_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
@@ -45,7 +54,13 @@ class Item(_message.Message):
     vitesse: float
     sprite: bytes
     slot: int
-    def __init__(self, id: _Optional[str] = ..., nom: _Optional[str] = ..., type: _Optional[str] = ..., force: _Optional[int] = ..., endurance: _Optional[int] = ..., intelligence: _Optional[int] = ..., vitalite: _Optional[int] = ..., mana: _Optional[int] = ..., rarete: _Optional[str] = ..., vitesse: _Optional[float] = ..., sprite: _Optional[bytes] = ..., slot: _Optional[int] = ...) -> None: ...
+
+    def __init__(self, id: _Optional[str] = ..., nom: _Optional[str] = ..., type: _Optional[str] = ...,
+                 force: _Optional[int] = ..., endurance: _Optional[int] = ..., intelligence: _Optional[int] = ...,
+                 vitalite: _Optional[int] = ..., mana: _Optional[int] = ..., rarete: _Optional[str] = ...,
+                 vitesse: _Optional[float] = ..., sprite: _Optional[bytes] = ...,
+                 slot: _Optional[int] = ...) -> None: ...
+
 
 class AddUserDataRequest(_message.Message):
     __slots__ = ("user_id", "token", "item")
@@ -55,13 +70,18 @@ class AddUserDataRequest(_message.Message):
     user_id: str
     token: str
     item: Item
-    def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ..., item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
+    def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ...,
+                 item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
 
 class AddUserDataResponse(_message.Message):
     __slots__ = ("success",)
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     success: bool
+
     def __init__(self, success: bool = ...) -> None: ...
+
 
 class UpdateUserDataRequest(_message.Message):
     __slots__ = ("user_id", "token", "old_item", "new_item")
@@ -73,13 +93,19 @@ class UpdateUserDataRequest(_message.Message):
     token: str
     old_item: Item
     new_item: Item
-    def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ..., old_item: _Optional[_Union[Item, _Mapping]] = ..., new_item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
+    def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ...,
+                 old_item: _Optional[_Union[Item, _Mapping]] = ...,
+                 new_item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
 
 class UpdateUserDataResponse(_message.Message):
     __slots__ = ("success",)
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     success: bool
+
     def __init__(self, success: bool = ...) -> None: ...
+
 
 class DeleteUserDataRequest(_message.Message):
     __slots__ = ("user_id", "token", "item")
@@ -89,13 +115,18 @@ class DeleteUserDataRequest(_message.Message):
     user_id: str
     token: str
     item: Item
-    def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ..., item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
+    def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ...,
+                 item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
 
 class DeleteUserDataResponse(_message.Message):
     __slots__ = ("success",)
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     success: bool
+
     def __init__(self, success: bool = ...) -> None: ...
+
 
 class GetItemListRequest(_message.Message):
     __slots__ = ("user_id", "token")
@@ -103,13 +134,17 @@ class GetItemListRequest(_message.Message):
     TOKEN_FIELD_NUMBER: _ClassVar[int]
     user_id: str
     token: str
+
     def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ...) -> None: ...
+
 
 class GetItemListResponse(_message.Message):
     __slots__ = ("items",)
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[Item]
+
     def __init__(self, items: _Optional[_Iterable[_Union[Item, _Mapping]]] = ...) -> None: ...
+
 
 class GetItemRequest(_message.Message):
     __slots__ = ("item_id", "user_id", "token")
@@ -119,13 +154,18 @@ class GetItemRequest(_message.Message):
     item_id: str
     user_id: str
     token: str
-    def __init__(self, item_id: _Optional[str] = ..., user_id: _Optional[str] = ..., token: _Optional[str] = ...) -> None: ...
+
+    def __init__(self, item_id: _Optional[str] = ..., user_id: _Optional[str] = ...,
+                 token: _Optional[str] = ...) -> None: ...
+
 
 class GetItemResponse(_message.Message):
     __slots__ = ("item",)
     ITEM_FIELD_NUMBER: _ClassVar[int]
     item: Item
+
     def __init__(self, item: _Optional[_Union[Item, _Mapping]] = ...) -> None: ...
+
 
 class GetMapDataRequest(_message.Message):
     __slots__ = ("user_id", "token")
@@ -133,7 +173,9 @@ class GetMapDataRequest(_message.Message):
     TOKEN_FIELD_NUMBER: _ClassVar[int]
     user_id: str
     token: str
+
     def __init__(self, user_id: _Optional[str] = ..., token: _Optional[str] = ...) -> None: ...
+
 
 class GetMapDataResponse(_message.Message):
     __slots__ = ("map_tmx", "terrain_atlas_tsx", "terrain_atlas_png")
@@ -143,4 +185,6 @@ class GetMapDataResponse(_message.Message):
     map_tmx: bytes
     terrain_atlas_tsx: bytes
     terrain_atlas_png: bytes
-    def __init__(self, map_tmx: _Optional[bytes] = ..., terrain_atlas_tsx: _Optional[bytes] = ..., terrain_atlas_png: _Optional[bytes] = ...) -> None: ...
+
+    def __init__(self, map_tmx: _Optional[bytes] = ..., terrain_atlas_tsx: _Optional[bytes] = ...,
+                 terrain_atlas_png: _Optional[bytes] = ...) -> None: ...

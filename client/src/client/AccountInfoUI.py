@@ -10,7 +10,6 @@ def account_info_ui(root):
     account = GetAccount.GetAccount(Global.ID, Global.TOKEN).get_account()
     root.title("Informations du compte")
 
-
     # 8-bit style
     bg_color = "#444444"  # Background color
     fg_color = "#FFFFFF"  # Text color
@@ -55,11 +54,12 @@ def account_info_ui(root):
     password_entry = tk.Entry(frame, show="*", bg=bg_color, fg=fg_color, font=font_style, insertbackground=fg_color)
     password_entry.grid(row=6, column=1)
 
-    confirm_password_label = tk.Label(frame, text="Confirmer le mot de passe:", bg=bg_color, fg=fg_color, font=font_style)
+    confirm_password_label = tk.Label(frame, text="Confirmer le mot de passe:", bg=bg_color, fg=fg_color,
+                                      font=font_style)
     confirm_password_label.grid(row=7, column=0, sticky="w")
-    confirm_password_entry = tk.Entry(frame, show="*", bg=bg_color, fg=fg_color, font=font_style, insertbackground=fg_color)
+    confirm_password_entry = tk.Entry(frame, show="*", bg=bg_color, fg=fg_color, font=font_style,
+                                      insertbackground=fg_color)
     confirm_password_entry.grid(row=7, column=1)
-
 
     def update_account():
         username = username_entry.get()
@@ -82,7 +82,7 @@ def account_info_ui(root):
                 messagebox.showerror("Error", "An error occurred: " + str(e))
 
     update_button = tk.Button(frame, text="Mettre à jour", bg=btn_color, fg=bg_color, font=font_style,
-                                command=update_account)
+                              command=update_account)
     update_button.grid(row=8, column=0, columnspan=2)
 
     def delete_account():
@@ -97,7 +97,7 @@ def account_info_ui(root):
             messagebox.showerror("Error", "An error occurred: " + str(e))
 
     delete_button = tk.Button(frame, text="Supprimer le compte", bg=btn_color, fg=bg_color, font=font_style,
-                                command=delete_account)
+                              command=delete_account)
     delete_button.grid(row=9, column=0, columnspan=2)
 
     def logout():
@@ -108,7 +108,7 @@ def account_info_ui(root):
         LoginUI.login_ui(root)
 
     logout_button = tk.Button(frame, text="Déconnexion", bg=btn_color, fg=bg_color, font=font_style,
-                                command=logout)
+                              command=logout)
     logout_button.grid(row=10, column=0, columnspan=2)
 
     def play():
@@ -127,7 +127,7 @@ def account_info_ui(root):
         GameUI.show_map(root, music_thread, music_manager)
 
     play_button = tk.Button(frame, text="Jouer", bg=btn_color, fg=bg_color, font=font_style,
-                                command=play)
+                            command=play)
     play_button.grid(row=11, column=0, columnspan=2)
 
     root.mainloop()

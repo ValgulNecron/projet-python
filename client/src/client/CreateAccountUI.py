@@ -1,6 +1,7 @@
-import os
 import tkinter as tk
 from tkinter import messagebox
+
+
 def signup_ui(root):
     root.title("Créer un compte")
     # 8-bit style
@@ -21,9 +22,11 @@ def signup_ui(root):
     password_label.grid(row=1, column=0, sticky="w")
     password_entry = tk.Entry(frame, show="*", bg=bg_color, fg=fg_color, font=font_style, insertbackground=fg_color)
     password_entry.grid(row=1, column=1)
-    confirm_password_label = tk.Label(frame, text="Confirmer le mot de passe:", bg=bg_color, fg=fg_color, font=font_style)
+    confirm_password_label = tk.Label(frame, text="Confirmer le mot de passe:", bg=bg_color, fg=fg_color,
+                                      font=font_style)
     confirm_password_label.grid(row=2, column=0, sticky="w")
-    confirm_password_entry = tk.Entry(frame, show="*", bg=bg_color, fg=fg_color, font=font_style, insertbackground=fg_color)
+    confirm_password_entry = tk.Entry(frame, show="*", bg=bg_color, fg=fg_color, font=font_style,
+                                      insertbackground=fg_color)
     confirm_password_entry.grid(row=2, column=1)
     email_label = tk.Label(frame, text="Email:", bg=bg_color, fg=fg_color, font=font_style)
     email_label.grid(row=3, column=0, sticky="w")
@@ -50,9 +53,11 @@ def signup_ui(root):
                 import client.src.client.LoginUI as LoginUI
                 LoginUI.login_ui(root)  # Call the login_ui function with the root window
             except Exception as e:
-                messagebox.showerror("Erreur","Erreur de création de compte \nVeuillez vérifier votre connexion internet et si le compte n'existe pas déjà")
+                messagebox.showerror("Erreur",
+                                     "Erreur de création de compte \nVeuillez vérifier votre connexion internet et si le compte n'existe pas déjà")
                 frame.pack_forget()  # Hide the current frame
                 signup_ui(root)
+
     create_button = tk.Button(frame, text="Créer le compte", bg=btn_color, fg=bg_color, font=font_style,
                               command=create_account)
     create_button.grid(row=4, column=1, columnspan=1)
@@ -63,6 +68,5 @@ def signup_ui(root):
         CreateAccountUI.login_ui(root)
 
     login_button = tk.Button(frame, text="Se connecter", bg=btn_color, fg=bg_color, font=font_style,
-                              command=login)
+                             command=login)
     login_button.grid(row=4, column=0, columnspan=1)
-

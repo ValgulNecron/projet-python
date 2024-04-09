@@ -7,54 +7,53 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
 from google.protobuf.internal import builder as _builder
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
-
-
-
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndata.proto\x12\x04\x64\x61ta\"4\n\x12GetUserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\"0\n\x13GetUserDataResponse\x12\x19\n\x05items\x18\x01 \x03(\x0b\x32\n.data.Item\"\xc4\x01\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03nom\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05\x66orce\x18\x04 \x01(\x03\x12\x11\n\tendurance\x18\x05 \x01(\x03\x12\x14\n\x0cintelligence\x18\x06 \x01(\x03\x12\x10\n\x08vitalite\x18\x07 \x01(\x03\x12\x0c\n\x04mana\x18\x08 \x01(\x03\x12\x0e\n\x06rarete\x18\t \x01(\t\x12\x0f\n\x07vitesse\x18\n \x01(\x02\x12\x0e\n\x06sprite\x18\x0b \x01(\x0c\x12\x0c\n\x04slot\x18\x0c \x01(\x03\"N\n\x12\x41\x64\x64UserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x18\n\x04item\x18\x03 \x01(\x0b\x32\n.data.Item\"&\n\x13\x41\x64\x64UserDataResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"s\n\x15UpdateUserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x1c\n\x08old_item\x18\x03 \x01(\x0b\x32\n.data.Item\x12\x1c\n\x08new_item\x18\x04 \x01(\x0b\x32\n.data.Item\")\n\x16UpdateUserDataResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"Q\n\x15\x44\x65leteUserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x18\n\x04item\x18\x03 \x01(\x0b\x32\n.data.Item\")\n\x16\x44\x65leteUserDataResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"4\n\x12GetItemListRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\"0\n\x13GetItemListResponse\x12\x19\n\x05items\x18\x01 \x03(\x0b\x32\n.data.Item\"A\n\x0eGetItemRequest\x12\x0f\n\x07item_id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\x12\r\n\x05token\x18\x03 \x01(\t\"+\n\x0fGetItemResponse\x12\x18\n\x04item\x18\x01 \x01(\x0b\x32\n.data.Item\"3\n\x11GetMapDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\"[\n\x12GetMapDataResponse\x12\x0f\n\x07map_tmx\x18\x01 \x01(\x0c\x12\x19\n\x11terrain_atlas_tsx\x18\x02 \x01(\x0c\x12\x19\n\x11terrain_atlas_png\x18\x03 \x01(\x0c\x32\xac\x02\n\x08UserData\x12\x42\n\x0bGetUserData\x12\x18.data.GetUserDataRequest\x1a\x19.data.GetUserDataResponse\x12\x42\n\x0b\x41\x64\x64UserData\x12\x18.data.AddUserDataRequest\x1a\x19.data.AddUserDataResponse\x12K\n\x0eUpdateUserData\x12\x1b.data.UpdateUserDataRequest\x1a\x1c.data.UpdateUserDataResponse\x12K\n\x0e\x44\x65leteUserData\x12\x1b.data.DeleteUserDataRequest\x1a\x1c.data.DeleteUserDataResponse2\x86\x01\n\x08ItemData\x12\x42\n\x0bGetItemList\x12\x18.data.GetItemListRequest\x1a\x19.data.GetItemListResponse\x12\x36\n\x07GetItem\x12\x14.data.GetItemRequest\x1a\x15.data.GetItemResponse2J\n\x07MapData\x12?\n\nGetMapData\x12\x17.data.GetMapDataRequest\x1a\x18.data.GetMapDataResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
+    b'\n\ndata.proto\x12\x04\x64\x61ta\"4\n\x12GetUserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\"0\n\x13GetUserDataResponse\x12\x19\n\x05items\x18\x01 \x03(\x0b\x32\n.data.Item\"\xc4\x01\n\x04Item\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0b\n\x03nom\x18\x02 \x01(\t\x12\x0c\n\x04type\x18\x03 \x01(\t\x12\r\n\x05\x66orce\x18\x04 \x01(\x03\x12\x11\n\tendurance\x18\x05 \x01(\x03\x12\x14\n\x0cintelligence\x18\x06 \x01(\x03\x12\x10\n\x08vitalite\x18\x07 \x01(\x03\x12\x0c\n\x04mana\x18\x08 \x01(\x03\x12\x0e\n\x06rarete\x18\t \x01(\t\x12\x0f\n\x07vitesse\x18\n \x01(\x02\x12\x0e\n\x06sprite\x18\x0b \x01(\x0c\x12\x0c\n\x04slot\x18\x0c \x01(\x03\"N\n\x12\x41\x64\x64UserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x18\n\x04item\x18\x03 \x01(\x0b\x32\n.data.Item\"&\n\x13\x41\x64\x64UserDataResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"s\n\x15UpdateUserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x1c\n\x08old_item\x18\x03 \x01(\x0b\x32\n.data.Item\x12\x1c\n\x08new_item\x18\x04 \x01(\x0b\x32\n.data.Item\")\n\x16UpdateUserDataResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"Q\n\x15\x44\x65leteUserDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\x12\x18\n\x04item\x18\x03 \x01(\x0b\x32\n.data.Item\")\n\x16\x44\x65leteUserDataResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"4\n\x12GetItemListRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\"0\n\x13GetItemListResponse\x12\x19\n\x05items\x18\x01 \x03(\x0b\x32\n.data.Item\"A\n\x0eGetItemRequest\x12\x0f\n\x07item_id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\x12\r\n\x05token\x18\x03 \x01(\t\"+\n\x0fGetItemResponse\x12\x18\n\x04item\x18\x01 \x01(\x0b\x32\n.data.Item\"3\n\x11GetMapDataRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\r\n\x05token\x18\x02 \x01(\t\"[\n\x12GetMapDataResponse\x12\x0f\n\x07map_tmx\x18\x01 \x01(\x0c\x12\x19\n\x11terrain_atlas_tsx\x18\x02 \x01(\x0c\x12\x19\n\x11terrain_atlas_png\x18\x03 \x01(\x0c\x32\xac\x02\n\x08UserData\x12\x42\n\x0bGetUserData\x12\x18.data.GetUserDataRequest\x1a\x19.data.GetUserDataResponse\x12\x42\n\x0b\x41\x64\x64UserData\x12\x18.data.AddUserDataRequest\x1a\x19.data.AddUserDataResponse\x12K\n\x0eUpdateUserData\x12\x1b.data.UpdateUserDataRequest\x1a\x1c.data.UpdateUserDataResponse\x12K\n\x0e\x44\x65leteUserData\x12\x1b.data.DeleteUserDataRequest\x1a\x1c.data.DeleteUserDataResponse2\x86\x01\n\x08ItemData\x12\x42\n\x0bGetItemList\x12\x18.data.GetItemListRequest\x1a\x19.data.GetItemListResponse\x12\x36\n\x07GetItem\x12\x14.data.GetItemRequest\x1a\x15.data.GetItemResponse2J\n\x07MapData\x12?\n\nGetMapData\x12\x17.data.GetMapDataRequest\x1a\x18.data.GetMapDataResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'data_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-  DESCRIPTOR._options = None
-  _globals['_GETUSERDATAREQUEST']._serialized_start=20
-  _globals['_GETUSERDATAREQUEST']._serialized_end=72
-  _globals['_GETUSERDATARESPONSE']._serialized_start=74
-  _globals['_GETUSERDATARESPONSE']._serialized_end=122
-  _globals['_ITEM']._serialized_start=125
-  _globals['_ITEM']._serialized_end=321
-  _globals['_ADDUSERDATAREQUEST']._serialized_start=323
-  _globals['_ADDUSERDATAREQUEST']._serialized_end=401
-  _globals['_ADDUSERDATARESPONSE']._serialized_start=403
-  _globals['_ADDUSERDATARESPONSE']._serialized_end=441
-  _globals['_UPDATEUSERDATAREQUEST']._serialized_start=443
-  _globals['_UPDATEUSERDATAREQUEST']._serialized_end=558
-  _globals['_UPDATEUSERDATARESPONSE']._serialized_start=560
-  _globals['_UPDATEUSERDATARESPONSE']._serialized_end=601
-  _globals['_DELETEUSERDATAREQUEST']._serialized_start=603
-  _globals['_DELETEUSERDATAREQUEST']._serialized_end=684
-  _globals['_DELETEUSERDATARESPONSE']._serialized_start=686
-  _globals['_DELETEUSERDATARESPONSE']._serialized_end=727
-  _globals['_GETITEMLISTREQUEST']._serialized_start=729
-  _globals['_GETITEMLISTREQUEST']._serialized_end=781
-  _globals['_GETITEMLISTRESPONSE']._serialized_start=783
-  _globals['_GETITEMLISTRESPONSE']._serialized_end=831
-  _globals['_GETITEMREQUEST']._serialized_start=833
-  _globals['_GETITEMREQUEST']._serialized_end=898
-  _globals['_GETITEMRESPONSE']._serialized_start=900
-  _globals['_GETITEMRESPONSE']._serialized_end=943
-  _globals['_GETMAPDATAREQUEST']._serialized_start=945
-  _globals['_GETMAPDATAREQUEST']._serialized_end=996
-  _globals['_GETMAPDATARESPONSE']._serialized_start=998
-  _globals['_GETMAPDATARESPONSE']._serialized_end=1089
-  _globals['_USERDATA']._serialized_start=1092
-  _globals['_USERDATA']._serialized_end=1392
-  _globals['_ITEMDATA']._serialized_start=1395
-  _globals['_ITEMDATA']._serialized_end=1529
-  _globals['_MAPDATA']._serialized_start=1531
-  _globals['_MAPDATA']._serialized_end=1605
+    DESCRIPTOR._options = None
+    _globals['_GETUSERDATAREQUEST']._serialized_start = 20
+    _globals['_GETUSERDATAREQUEST']._serialized_end = 72
+    _globals['_GETUSERDATARESPONSE']._serialized_start = 74
+    _globals['_GETUSERDATARESPONSE']._serialized_end = 122
+    _globals['_ITEM']._serialized_start = 125
+    _globals['_ITEM']._serialized_end = 321
+    _globals['_ADDUSERDATAREQUEST']._serialized_start = 323
+    _globals['_ADDUSERDATAREQUEST']._serialized_end = 401
+    _globals['_ADDUSERDATARESPONSE']._serialized_start = 403
+    _globals['_ADDUSERDATARESPONSE']._serialized_end = 441
+    _globals['_UPDATEUSERDATAREQUEST']._serialized_start = 443
+    _globals['_UPDATEUSERDATAREQUEST']._serialized_end = 558
+    _globals['_UPDATEUSERDATARESPONSE']._serialized_start = 560
+    _globals['_UPDATEUSERDATARESPONSE']._serialized_end = 601
+    _globals['_DELETEUSERDATAREQUEST']._serialized_start = 603
+    _globals['_DELETEUSERDATAREQUEST']._serialized_end = 684
+    _globals['_DELETEUSERDATARESPONSE']._serialized_start = 686
+    _globals['_DELETEUSERDATARESPONSE']._serialized_end = 727
+    _globals['_GETITEMLISTREQUEST']._serialized_start = 729
+    _globals['_GETITEMLISTREQUEST']._serialized_end = 781
+    _globals['_GETITEMLISTRESPONSE']._serialized_start = 783
+    _globals['_GETITEMLISTRESPONSE']._serialized_end = 831
+    _globals['_GETITEMREQUEST']._serialized_start = 833
+    _globals['_GETITEMREQUEST']._serialized_end = 898
+    _globals['_GETITEMRESPONSE']._serialized_start = 900
+    _globals['_GETITEMRESPONSE']._serialized_end = 943
+    _globals['_GETMAPDATAREQUEST']._serialized_start = 945
+    _globals['_GETMAPDATAREQUEST']._serialized_end = 996
+    _globals['_GETMAPDATARESPONSE']._serialized_start = 998
+    _globals['_GETMAPDATARESPONSE']._serialized_end = 1089
+    _globals['_USERDATA']._serialized_start = 1092
+    _globals['_USERDATA']._serialized_end = 1392
+    _globals['_ITEMDATA']._serialized_start = 1395
+    _globals['_ITEMDATA']._serialized_end = 1529
+    _globals['_MAPDATA']._serialized_start = 1531
+    _globals['_MAPDATA']._serialized_end = 1605
 # @@protoc_insertion_point(module_scope)

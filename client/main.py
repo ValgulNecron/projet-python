@@ -1,7 +1,7 @@
 import os
+import tkinter as tk
 
 import client.src.client.ServerUI as UI
-import tkinter as tk
 
 if __name__ == '__main__':
     for k in list(os.environ.keys()):
