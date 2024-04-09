@@ -6,7 +6,7 @@ import pytmx
 
 from client import Global
 from client.src.entity.proto_compiled.entity import player_pos_pb2, player_pos_pb2_grpc
-from client.src.entity.proto_compiled.entity.player_pos_pb2 import Pos
+from client.src.entity.proto_compiled.entity.player_pos_pb2 import Pos, UpdatePosRequest
 
 
 def play(screen, tmx_data):
@@ -85,6 +85,7 @@ def play(screen, tmx_data):
         stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
         response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
     for pos in response.pos:
+        pos = pos.pos
         player2 = Player('Player.png', pos.pos_x, pos.pos_y)
         other_player.add(player2)
     # Spawn monsters randomly within the map bounds
@@ -107,8 +108,35 @@ def play(screen, tmx_data):
     all_players = pygame.sprite.Group()
     all_players.add(player)
 
-    # Game Loop
+    import threading
     running = True
+
+    def get_other_players():
+        other_player.empty()
+        while running:
+            with grpc.insecure_channel(Global.IP) as channel:
+                stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
+                response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
+            for pos in response.pos:
+                pos = pos.pos
+                player2 = Player('Player.png', pos.pos_x, pos.pos_y)
+                other_player.add(player2)
+            # make the thread sleep for 1 second
+            threading.Event().wait(10)
+
+    # Create a new thread and start it
+    thread = threading.Thread(target=get_other_players)
+    thread.start()
+
+    def update_pos(player_x, player_y):
+        with grpc.insecure_channel(Global.IP) as channel:
+            stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
+            pos = Pos(pos_x=player_x, pos_y=player_y, last_update=0)
+            player_pos = UpdatePosRequest(user_id=Global.ID, token=Global.TOKEN, pos=pos)
+            response = stub.PlayerUpdatePos(player_pos)
+
+    # Game Loop
+    compteur = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -123,15 +151,6 @@ def play(screen, tmx_data):
         for player in other_player:
             player.draw(screen)
 
-        # clean the group of other player
-        other_player.empty()
-        # get other player position
-        with grpc.insecure_channel(Global.IP) as channel:
-            stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
-            response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
-        for pos in response.pos:
-            player2 = Player('Player.png', pos.pos_x, pos.pos_y)
-            other_player.add(player2)
 
         # Populate collision_objects with objects marked for collision
         for layer in tmx_data.visible_layers:
@@ -141,7 +160,6 @@ def play(screen, tmx_data):
                         obj_rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
                         collision_objects.append(obj_rect)
 
-        print(collision_objects)
 
         # load the collision objects
         for obj_rect in collision_objects:
@@ -188,7 +206,7 @@ def play(screen, tmx_data):
         for obj_rect in collision_objects:
             if player_rect.colliderect(obj_rect):
                 # Handle collision here
-                print("Collision detected!")
+                a = a
 
         # Monster movement
         for monster in monsters:
@@ -198,16 +216,19 @@ def play(screen, tmx_data):
         collisions = pygame.sprite.groupcollide(all_players, all_players, False, False)
         for player, collided_players in collisions.items():
             # Handle collision logic here
-            print(f"Player {player} collided with {len(collided_players)} other players.")
-            # print player position
-            print(player.rect.x, player.rect.y)
+            a = 2
 
 
         # update pos to server
-        with grpc.insecure_channel(Global.IP) as channel:
-            stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
-            response = stub.PlayerUpdatePos(
-                player_pos_pb2.UpdatePosRequest(user_id=Global.ID, token=Global.TOKEN, pos=Pos(pos_x=player.rect.x, pos_y=player.rect.y, last_update=0)))
-        print(response.message)
+        compteur += 1
+        if compteur == 10:
+            player_x = player.rect.x
+            player_y = player.rect.y
+            thread = threading.Thread(target=update_pos, args=(player_x, player_y))
+            thread.start()
+            compteur = 0
+
+
 
     pygame.quit()
+
