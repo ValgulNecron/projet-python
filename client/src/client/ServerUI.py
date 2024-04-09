@@ -52,10 +52,3 @@ def ask_for_server_address_ui(root):
 
     # Start the main loop
     root.mainloop()
-
-
-if __name__ == '__main__':
-    for k in list(os.environ.keys()):
-        if k.lower().endswith('_proxy'):
-            del os.environ[k]
-    ask_for_server_address_ui()
