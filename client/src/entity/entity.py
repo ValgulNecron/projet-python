@@ -1,7 +1,12 @@
 import random
 
+import grpc
 import pygame
 import pytmx
+
+from client import Global
+from client.src.entity.proto_compiled.entity import player_pos_pb2, player_pos_pb2_grpc
+from client.src.entity.proto_compiled.entity.player_pos_pb2 import Pos
 
 
 def play(screen, tmx_data):
@@ -74,7 +79,14 @@ def play(screen, tmx_data):
     # ... rest of the class ...
     # Spawn the player on a fixed tile
     player = Player('Player.png', 400, 300)  # Example fixed position
-
+    other_player = pygame.sprite.Group()
+    # get other player position
+    with grpc.insecure_channel(Global.IP) as channel:
+        stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
+        response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
+    for pos in response.pos:
+        player2 = Player('Player.png', pos.pos_x, pos.pos_y)
+        other_player.add(player2)
     # Spawn monsters randomly within the map bounds
     monsters = pygame.sprite.Group()
     for _ in range(10):  # Spawn 10 monsters
@@ -106,6 +118,20 @@ def play(screen, tmx_data):
 
         # Initialize collision_objects list
         collision_objects = []
+
+        # draw other player
+        for player in other_player:
+            player.draw(screen)
+
+        # clean the group of other player
+        other_player.empty()
+        # get other player position
+        with grpc.insecure_channel(Global.IP) as channel:
+            stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
+            response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
+        for pos in response.pos:
+            player2 = Player('Player.png', pos.pos_x, pos.pos_y)
+            other_player.add(player2)
 
         # Populate collision_objects with objects marked for collision
         for layer in tmx_data.visible_layers:
@@ -175,5 +201,13 @@ def play(screen, tmx_data):
             print(f"Player {player} collided with {len(collided_players)} other players.")
             # print player position
             print(player.rect.x, player.rect.y)
+
+
+        # update pos to server
+        with grpc.insecure_channel(Global.IP) as channel:
+            stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
+            response = stub.PlayerUpdatePos(
+                player_pos_pb2.UpdatePosRequest(user_id=Global.ID, token=Global.TOKEN, pos=Pos(pos_x=player.rect.x, pos_y=player.rect.y, last_update=0)))
+        print(response.message)
 
     pygame.quit()
