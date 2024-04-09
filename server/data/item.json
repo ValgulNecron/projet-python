@@ -1,8 +1,10 @@
+
 {
   "weapons": [
     {
       "id": "epee_1",
       "nom": "Epee du troubadour",
+      "type":"arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
@@ -10,11 +12,12 @@
       "mana": 3,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/epee_1"
+      "sprite": "./sprite/epee_1.png"
     },
     {
       "id": "epee_2",
       "nom": "Epee du pauvre",
+      "type":"arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 0,
@@ -22,11 +25,12 @@
       "mana": 0,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/epee_2"
+      "sprite": "./sprite/epee_2.png"
     },
     {
       "id": "epee_3",
       "nom": "Epee du fermier",
+      "type":"arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
@@ -34,11 +38,12 @@
       "mana": 0,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/epee_3"
+      "sprite": "./sprite/epee_3.png"
     },
     {
       "id": "lance_1",
       "nom": "lance avec bout tres pointu",
+      "type":"arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
@@ -51,6 +56,7 @@
     {
       "id": "lance_2",
       "nom": "lance de festivalier",
+      "type":"arme",
       "force": 9,
       "endurance": 0,
       "intelligence": 3,
@@ -58,11 +64,12 @@
       "mana": 1,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/lance_2"
+      "sprite": "./sprite/lance_2.png"
     },
     {
       "id": "lance_3",
       "nom": "lance en carton",
+      "type":"arme",
       "force": 5,
       "endurance": 5,
       "intelligence": 5,
@@ -70,33 +77,36 @@
       "mana": 5,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/lance_3"
+      "sprite": "./sprite/lance_3.png"
     },
     {
       "id": "masse_1",
       "nom": "Masse du troubadour",
+      "type":"arme",
       "force": 9,
       "endurance": 6,
       "intelligence": 5,
       "vitalite": 8,
       "mana": 3,
       "rarete": "Normal",
-      "sprite": "./sprite/masse_1"
+      "sprite": "./sprite/masse_1.png"
     },
     {
       "id": "masse_2",
       "nom": "Super Matraque",
+      "type":"arme",
       "force": 5,
       "endurance": 6,
       "intelligence": 5,
       "vitalite": 8,
       "mana": 3,
       "rarete": "Normal",
-      "sprite": "./sprite/masse_2"
+      "sprite": "./sprite/masse_2.png"
     },
     {
       "id": "masse_3",
       "nom": "gros cailloux brillant",
+      "type":"arme",
       "force": 30,
       "endurance": 6,
       "intelligence": 25,
@@ -104,11 +114,12 @@
       "mana": 3,
       "vitesse": 2.5,
       "rarete": "rare",
-      "sprite": "./sprite/masse_3"
+      "sprite": "./sprite/masse_3.png"
     },
     {
       "id": "plastron_1",
       "nom": "Un plastron en tissu",
+      "type":"armure", 
       "force": 3,
       "endurance": 10,
       "intelligence": 5,
@@ -116,11 +127,12 @@
       "mana": 3,
       "vitesse": 2.5,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_1"
+      "sprite": "./sprite/plastron_1.png"
     },
     {
       "id": "plastron_2",
       "nom": "Plastron de l'aventurier",
+      "type":"armure", 
       "force": 5,
       "endurance": 12,
       "intelligence": 7,
@@ -128,11 +140,12 @@
       "mana": 4,
       "vitesse": 2.0,
       "rarete": "épique",
-      "sprite": "./sprite/plastron_2"
+      "sprite": "./sprite/plastron_2.png"
     },
     {
       "id": "plastron_3",
       "nom": "Cuirasse du guerrier",
+      "type":"armure", 
       "force": 8,
       "endurance": 15,
       "intelligence": 2,
@@ -140,11 +153,12 @@
       "mana": 1,
       "vitesse": 1.5,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_3"
+      "sprite": "./sprite/plastron_3.png"
     },
     {
       "id": "plastron_4",
       "nom": "Haubert mystique",
+      "type":"armure",
       "force": 4,
       "endurance": 8,
       "intelligence": 15,
@@ -157,6 +171,7 @@
     {
       "id": "plastron_5",
       "nom": "Tunique des ombres",
+      "type":"armure", 
       "force": 3,
       "endurance": 9,
       "intelligence": 18,
@@ -164,11 +179,12 @@
       "mana": 6,
       "vitesse": 3.0,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_5"
+      "sprite": "./sprite/plastron_5.png"
     },
     {
       "id": "jambiere_1",
       "nom": "jambiere en tissu",
+      "type":"armure", 
       "force": 3,
       "endurance": 9,
       "intelligence": 0,
@@ -176,11 +192,12 @@
       "mana": 6,
       "vitesse": 0.0,
       "rarete": "rare",
-      "sprite": "./sprite/plastron_5"
+      "sprite": "./sprite/plastron_5.png"
     },
     {
       "id": "jambiere_2",
       "nom": "Jambieres de l'agilite",
+      "type":"armure", 
       "force": 2,
       "endurance": 7,
       "intelligence": 4,
@@ -188,11 +205,12 @@
       "mana": 3,
       "vitesse": 1.5,
       "rarete": "Normal",
-      "sprite": "./sprite/jambiere_2"
+      "sprite": "./sprite/jambiere_2.png"
     },
     {
       "id": "jambiere_3",
       "nom": "Greves du guerrier",
+      "type":"armure", 
       "force": 5,
       "endurance": 10,
       "intelligence": 0,
@@ -200,35 +218,12 @@
       "mana": 0,
       "vitesse": -0.5,
       "rarete": "Normal",
-      "sprite": "./sprite/jambiere_3"
-    },
-    {
-      "id": "jambiere_4",
-      "nom": "Protege cuisses mystiques",
-      "force": 1,
-      "endurance": 6,
-      "intelligence": 8,
-      "vitalite": 4,
-      "mana": 10,
-      "vitesse": 0.0,
-      "rarete": "Normal",
-      "sprite": "./sprite/jambiere_4"
-    },
-    {
-      "id": "jambiere_5",
-      "nom": "Cuissardes de vitesse",
-      "force": 2,
-      "endurance": 8,
-      "intelligence": 2,
-      "vitalite": 5,
-      "mana": 2,
-      "vitesse": 2.0,
-      "rarete": "Normal",
-      "sprite": "./sprite/jambiere_5"
+      "sprite": "./sprite/jambiere_3.png"
     },
     {
       "id": "bottes_1",
       "nom": "Bottes de vitesse",
+      "type":"armure", 
       "force": 1,
       "endurance": 5,
       "intelligence": 2,
@@ -236,11 +231,12 @@
       "mana": 1,
       "vitesse": 5.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_1"
+      "sprite": "./sprite/bottes_1.png"
     },
     {
       "id": "bottes_2",
       "nom": "Bottes du marcheur nocturne",
+      "type":"armure", 
       "force": 2,
       "endurance": 4,
       "intelligence": 3,
@@ -248,11 +244,12 @@
       "mana": 2,
       "vitesse": 3.5,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_2"
+      "sprite": "./sprite/bottes_2.png"
     },
     {
       "id": "bottes_3",
       "nom": "Bottes d'endurance",
+      "type":"armure", 
       "force": 0,
       "endurance": 8,
       "intelligence": 1,
@@ -260,11 +257,12 @@
       "mana": 0,
       "vitesse": 2.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_3"
+      "sprite": "./sprite/bottes_3.png"
     },
     {
       "id": "bottes_4",
       "nom": "Bottes de l'explorateur",
+      "type":"armure", 
       "force": 3,
       "endurance": 3,
       "intelligence": 5,
@@ -272,11 +270,12 @@
       "mana": 4,
       "vitesse": 4.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_4"
+      "sprite": "./sprite/bottes_4.png"
     },
     {
       "id": "bottes_5",
       "nom": "Bottes légères",
+      "type":"armure", 
       "force": 2,
       "endurance": 2,
       "intelligence": 2,
@@ -284,11 +283,12 @@
       "mana": 2,
       "vitesse": 6.0,
       "rarete": "Normal",
-      "sprite": "./sprite/bottes_5"
+      "sprite": "./sprite/bottes_5.png"
     },
     {
       "id": "51",
       "nom": "Tueur de Valgul",
+      "type":"armure", 
       "force": 60,
       "endurance": 50,
       "intelligence": 0,
@@ -296,11 +296,12 @@
       "mana": 0,
       "vitesse": 2.5,
       "rarete": "Normal",
-      "sprite": "./sprite/valgul_killer"
+      "sprite": "./sprite/legendaire_1.png"
     },
     {
       "id": "52",
       "nom": "Lance de la destinee pourrie",
+      "type":"armure", 
       "force": 75,
       "endurance": 0,
       "intelligence": 0,
@@ -308,7 +309,7 @@
       "mana": 0,
       "vitesse": 1.5,
       "rarete": "epique",
-            "sprite": "./sprite/lance_pourrie"
+      "sprite": "./sprite/legendaire_2.png"
     }
   ]
 }
