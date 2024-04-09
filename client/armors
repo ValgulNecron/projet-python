@@ -1,0 +1,26 @@
+# json armors
+
+{
+  "armors": [
+    {
+      "id": 1,
+      "description": "Poitrine rembourre",
+      "force": 10,
+      "endurance": 10
+      "intelligence": 10,
+      "vitalite": 50,
+      "mana": 10,
+      "rarete": "Rare"
+    },
+    {
+      "id": 2,
+      "description": "Robe d'Archeveque",
+      "force": 10,
+      "endurance": 10,
+      "intelligence": 10,
+      "vitalite": 30,
+      "mana": 40,
+      "rarete": "Rare
+    }
+  ]
+}

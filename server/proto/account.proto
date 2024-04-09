@@ -3,67 +3,67 @@ syntax = "proto3";
 package account;
 
 service Account {
-  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
-  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
-  rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse);
-  rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse);
-  rpc Login(LoginRequest) returns (LoginResponse);
+    rpc CreateAccount (CreateAccountRequest) returns (CreateAccountResponse);
+    rpc GetAccount (GetAccountRequest) returns (GetAccountResponse);
+    rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountResponse);
+    rpc DeleteAccount (DeleteAccountRequest) returns (DeleteAccountResponse);
+    rpc Login (LoginRequest) returns (LoginResponse);
 }
 
 message CreateAccountRequest {
-  string email = 1;
-  string password = 2;
-  string username = 3;
+    string email = 1;
+    string password = 2;
+    string username = 3;
 }
 
 message CreateAccountResponse {
-  string id = 1;
-  bool created = 2;
+    string id = 1;
+    bool created = 2;
 }
 
 message GetAccountRequest {
-  string id = 1;
-  string token = 2;
+    string id = 1;
+    string token = 2;
 }
 
 message GetAccountResponse {
-  string id = 1;
-  string email = 2;
-  string username = 3;
-  string created = 4;
-  string updated = 5;
+    string id = 1;
+    string email = 2;
+    string username = 3;
+    string created = 4;
+    string updated = 5;
 }
 
 message UpdateAccountRequest {
-  string id = 1;
-  string token = 2;
-  string email = 3;
-  string password = 4;
-  string username = 5;
+    string id = 1;
+    string token = 2;
+    string email = 3;
+    string password = 4;
+    string username = 5;
 }
 
 message UpdateAccountResponse {
-  string id = 1;
-  bool updated = 2;
+    string id = 1;
+    bool updated = 2;
 }
 
 message DeleteAccountRequest {
-  string id = 1;
-  string token = 2;
+    string id = 1;
+    string token = 2;
 }
 
 message DeleteAccountResponse {
-  string id = 1;
-  bool deleted = 2;
+    string id = 1;
+    bool deleted = 2;
 }
 
 message LoginRequest {
-  string email = 1;
-  string password = 2;
+    string username = 1;
+    string password = 2;
 }
 
 message LoginResponse {
-  string id = 1;
-  bool logged = 2;
-  string token = 3;
+    string id = 1;
+    bool logged = 2;
+    string token = 3;
 }

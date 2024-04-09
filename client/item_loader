@@ -1,0 +1,20 @@
+# utilisation de la classe inventaire avec JSON
+# étape 2
+import json
+
+
+# Chargement du fichier JSON
+json_data = weapons.json
+
+# Créer une instance de la classe Inventaire
+mon_inventaire = Inventaire()
+
+# Charger les items à partir du JSON
+mon_inventaire.charger_items_depuis_json(json_data)
+
+# Ajouter des items à l'inventaire en utilisant leur ID
+mon_inventaire.ajouter_item_a_inventaire("bottes_1")
+mon_inventaire.ajouter_item_a_inventaire("bottes_2")
+
+# Afficher l'inventaire du joueur
+mon_inventaire.afficher_inventaire()
