@@ -84,26 +84,32 @@ def play(screen, tmx_data):
     all_players = pygame.sprite.Group()
     all_players.add(player)
 
-    # Initialize collision_objects list
-    collision_objects = []
-
-    # Populate collision_objects with objects marked for collision
-    for layer in tmx_data.visible_layers:
-        if isinstance(layer, pytmx.TiledObjectGroup):
-            for obj in layer:
-                if obj.properties.get('collision', False):
-                    obj_rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
-                    collision_objects.append(obj_rect)
-
     # Game Loop
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
         # Clear the screen
         screen.fill((0, 0, 0))
+
+        # Initialize collision_objects list
+        collision_objects = []
+
+        # Populate collision_objects with objects marked for collision
+        for layer in tmx_data.visible_layers:
+            if isinstance(layer, pytmx.TiledObjectGroup):
+                for obj in layer:
+                    if obj.properties.get('collision', False):
+                        obj_rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                        collision_objects.append(obj_rect)
+
+        print(collision_objects)
+
+        # load the collision objects
+        for obj_rect in collision_objects:
+            pygame.draw.rect(screen, (255, 0, 0), obj_rect.move(-cameraX, -cameraY), 2)
+            # add a border around the collision objects
 
         # Update camera position based on player's position
         cameraX = player.rect.x - screen.get_width() // 2
@@ -134,6 +140,13 @@ def play(screen, tmx_data):
         if keys[pygame.K_DOWN]:
             player.rect.y += 5
 
+        # Check for collisions with collision_objects
+        player_rect = pygame.Rect(player.rect.x, player.rect.y, player.rect.width, player.rect.height)
+        for obj_rect in collision_objects:
+            if player_rect.colliderect(obj_rect):
+                # Handle collision here
+                print("Collision detected!")
+
         # Monster movement
         for monster in monsters:
             monster.move()
@@ -143,5 +156,7 @@ def play(screen, tmx_data):
         for player, collided_players in collisions.items():
             # Handle collision logic here
             print(f"Player {player} collided with {len(collided_players)} other players.")
+            # print player position
+            print(player.rect.x, player.rect.y)
 
     pygame.quit()
