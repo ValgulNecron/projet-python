@@ -114,17 +114,10 @@ def account_info_ui(root):
     def play():
         frame.pack_forget()
         root.title("")
-        # launch the music management in a new thread
-        from client.src.music.MusicManagement import MusicManagement
-        # Create an instance of MusicManagement
-        music_manager = MusicManagement()
-        # Correctly start the music management in a new thread
-        music_thread = threading.Thread(target=music_manager.run)
-        music_thread.start()
         # launch the game
         print("Launching game")
         import client.src.map.map as GameUI
-        GameUI.show_map(root, music_thread, music_manager)
+        GameUI.show_map(root)
 
     play_button = tk.Button(frame, text="Jouer", bg=btn_color, fg=bg_color, font=font_style,
                             command=play)

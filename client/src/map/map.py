@@ -9,7 +9,7 @@ from client.src.data.proto_compiled.data import data_pb2_grpc, data_pb2
 from client.src.entity.entity import play
 
 
-def show_map(root, music_thread, music_manager):
+def show_map(root):
     root.withdraw()  # Hide the current window
     with grpc.insecure_channel(Global.IP) as channel:
         stub = data_pb2_grpc.MapDataStub(channel)
@@ -46,7 +46,6 @@ def show_map(root, music_thread, music_manager):
     os.remove('terrain_atlas.png')
     pygame.quit()
     root.deiconify()  # Show the window
-    music_manager.stop_music()
     import client.src.client.AccountInfoUI as AccountInfoUI
     AccountInfoUI.account_info_ui(root)  # Call the account_info_ui function with the root window
 
