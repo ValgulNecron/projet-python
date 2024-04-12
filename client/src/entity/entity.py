@@ -11,6 +11,7 @@ from client.src.entity.proto_compiled.entity.player_pos_pb2 import Pos, UpdatePo
 
 def play(screen, tmx_data):
     # Camera variables
+
     cameraX = 0
     cameraY = 0
 
@@ -94,9 +95,9 @@ def play(screen, tmx_data):
             # Draw the monster at a fixed position on the screen
             screen.blit(self.image, (self.rect.x, self.rect.y))
 
-        def move(self, new_x, new_y):
-            self.rect.x = new_x
-            self.rect.y = new_y
+        def move(self, new_x, new_y, player_x_movement=0, player_y_movement=0):
+            self.rect.x = new_x - player_x_movement
+            self.rect.y = new_y - player_y_movement
 
 
     # ... rest of the class ...
@@ -152,7 +153,7 @@ def play(screen, tmx_data):
                         if other_player.id == player.user_id:
                             already_in_list = True
                             pos = player.pos
-                            other_player.move(pos.pos_x, pos.pos_y)
+                            other_player.move(pos.pos_x, pos.pos_y, Global.player_movement_x_for_other_players, Global.player_movement_y_for_other_players)
                             break
                     if not already_in_list:
                         pos = player.pos
@@ -160,9 +161,8 @@ def play(screen, tmx_data):
                         other_players.add(player2)
 
             # make the thread sleep for 1 second
-            player_x_movement_for_other = 0
-            player_y_movement_for_other = 0
             threading.Event().wait(1)
+
 
     # Create a new thread and start it
     thread = threading.Thread(target=get_other_players)
@@ -226,12 +226,16 @@ def play(screen, tmx_data):
         player_x_movement, player_y_movement = 0, 0
         if keys[pygame.K_LEFT]:
             player_x_movement -= 5
+            Global.player_movement_x_for_other_players -= 5
         if keys[pygame.K_RIGHT]:
             player_x_movement += 5
+            Global.player_movement_x_for_other_players += 5
         if keys[pygame.K_UP]:
             player_y_movement -= 5
+            Global.player_movement_y_for_other_players -= 5
         if keys[pygame.K_DOWN]:
             player_y_movement += 5
+            Global.player_movement_y_for_other_players += 5
 
         player.move(player_x_movement, player_y_movement, other_players)
 
