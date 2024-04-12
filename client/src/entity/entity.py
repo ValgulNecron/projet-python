@@ -32,6 +32,15 @@ def play(screen, tmx_data):
             # Adjust the entity's position based on the camera's position
             screen.blit(self.image, (self.rect.x - cameraX, self.rect.y - cameraY))
 
+        def move(self, x, y, other_players):
+            self.rect.x += x
+            self.rect.y += y
+            for other_player in other_players:
+                new_x = other_player.rect.x
+                new_y = other_player.rect.y
+                new_x -= x
+                new_y -= y
+                other_player.move(new_x, new_y)
     # Monster Class
     class Monster(Entity):
         def __init__(self, image_path, x, y):
@@ -157,7 +166,9 @@ def play(screen, tmx_data):
                                 other_player.move(pos.pos_x, pos.pos_y)
                                 break
             # make the thread sleep for 1 second
-            threading.Event().wait(5)
+            player_x_movement_for_other = 0
+            player_y_movement_for_other = 0
+            threading.Event().wait(1)
 
     # Create a new thread and start it
     thread = threading.Thread(target=get_other_players)
@@ -220,17 +231,15 @@ def play(screen, tmx_data):
         keys = pygame.key.get_pressed()
         player_x_movement, player_y_movement = 0, 0
         if keys[pygame.K_LEFT]:
-            player.rect.x -= 5
-            player_x_movement = -5
+            player_x_movement -= 5
         if keys[pygame.K_RIGHT]:
-            player.rect.x += 5
-            player_x_movement = 5
+            player_x_movement += 5
         if keys[pygame.K_UP]:
-            player.rect.y -= 5
-            player_y_movement = -5
+            player_y_movement -= 5
         if keys[pygame.K_DOWN]:
-            player.rect.y += 5
-            player_y_movement = 5
+            player_y_movement += 5
+
+        player.move(player_x_movement, player_y_movement, other_players)
 
         # Check for collisions with collision_objects
         player_rect = pygame.Rect(player.rect.x, player.rect.y, player.rect.width, player.rect.height)
