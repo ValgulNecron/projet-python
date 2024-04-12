@@ -30,6 +30,7 @@ def show_map(root, music_thread, music_manager):
     screen = pygame.display.set_mode((screen_width, screen_height),
                                      pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
 
+
     tmx_data = pytmx.util_pygame.load_pygame('map.tmx')
     for layer in tmx_data.visible_layers:
         if isinstance(layer, pytmx.TiledTileLayer):

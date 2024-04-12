@@ -118,6 +118,11 @@ def play(screen, tmx_data):
                 stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
                 response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
             print(response)
+            # remove from the list the player that is currently playing (with the same id as the current player)
+            for player in response.pos:
+                if player.user_id == Global.ID:
+                    response.pos.remove(player)
+
             for pos in response.pos:
                 pos = pos.pos
                 player2 = Monster('Player.png', pos.pos_x, pos.pos_y)
@@ -148,12 +153,6 @@ def play(screen, tmx_data):
         # Initialize collision_objects list
         collision_objects = []
 
-        # draw other player
-
-        for player in other_player:
-            player.draw(screen)
-
-
         # Populate collision_objects with objects marked for collision
         for layer in tmx_data.visible_layers:
             if isinstance(layer, pytmx.TiledObjectGroup):
@@ -161,7 +160,6 @@ def play(screen, tmx_data):
                     if obj.properties.get('collision', False):
                         obj_rect = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
                         collision_objects.append(obj_rect)
-
 
         # load the collision objects
         for obj_rect in collision_objects:
@@ -184,6 +182,8 @@ def play(screen, tmx_data):
         player.draw(screen)
         for monster in monsters:
             monster.draw(screen)
+        for player in other_player:
+            player.draw(screen)
         # Update the display
         pygame.display.flip()
 
