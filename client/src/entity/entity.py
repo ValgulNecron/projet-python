@@ -76,10 +76,24 @@ def play(screen, tmx_data):
             # Draw the monster at a fixed position on the screen
             screen.blit(self.image, (self.rect.x, self.rect.y))
 
+    class OtherPlayer(Entity):
+        def __init__(self, image_path, x, y, id):
+            self.id = id
+            super().__init__(image_path, x, y)
+
+        def draw(self, screen):
+            # Draw the monster at a fixed position on the screen
+            screen.blit(self.image, (self.rect.x, self.rect.y))
+
+        def move(self, new_x, new_y):
+            self.rect.x = new_x
+            self.rect.y = new_y
+
+
     # ... rest of the class ...
     # Spawn the player on a fixed tile
     player = Player('Player.png', 400, 300)  # Example fixed position
-    other_player = pygame.sprite.Group()
+    other_players = pygame.sprite.Group()
     # get other player position
     with grpc.insecure_channel(Global.IP) as channel:
         stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
@@ -87,7 +101,7 @@ def play(screen, tmx_data):
     for pos in response.pos:
         pos = pos.pos
         player2 = Player('Player.png', pos.pos_x, pos.pos_y)
-        other_player.add(player2)
+        other_players.add(player2)
     # Spawn monsters randomly within the map bounds
     monsters = pygame.sprite.Group()
     for _ in range(10):  # Spawn 10 monsters
@@ -112,7 +126,7 @@ def play(screen, tmx_data):
     running = True
 
     def get_other_players():
-        other_player.empty()
+        other_players.empty()
         while running:
             with grpc.insecure_channel(Global.IP) as channel:
                 stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
@@ -121,14 +135,29 @@ def play(screen, tmx_data):
             # remove from the list the player that is currently playing (with the same id as the current player)
             for player in response.pos:
                 if player.user_id == Global.ID:
-                    response.pos.remove(player)
-
-            for pos in response.pos:
-                pos = pos.pos
-                player2 = Monster('Player.png', pos.pos_x, pos.pos_y)
-                other_player.add(player2)
+                    continue
+                elif player.user_id != Global.ID:
+                    # check if the player is already in the list
+                    already_in_list = False
+                    for other_player in other_players:
+                        if other_player.id == player.user_id:
+                            pos = player.pos
+                            already_in_list = True
+                            other_player.move(pos.pos_x, pos.pos_y)
+                            break
+                    if not already_in_list:
+                        pos = player.pos
+                        player2 = OtherPlayer('Player.png', pos.pos_x, pos.pos_y, player.user_id)
+                        other_players.add(player2)
+                    else:
+                        # update the position of the player
+                        for other_player in other_players:
+                            if other_player.id == player.user_id:
+                                pos = player.pos
+                                other_player.move(pos.pos_x, pos.pos_y)
+                                break
             # make the thread sleep for 1 second
-            threading.Event().wait(10)
+            threading.Event().wait(5)
 
     # Create a new thread and start it
     thread = threading.Thread(target=get_other_players)
@@ -182,8 +211,8 @@ def play(screen, tmx_data):
         player.draw(screen)
         for monster in monsters:
             monster.draw(screen)
-        for player in other_player:
-            player.draw(screen)
+        for other_player in other_players:
+            other_player.draw(screen)
         # Update the display
         pygame.display.flip()
 
