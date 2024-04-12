@@ -105,6 +105,10 @@ def play(screen, tmx_data):
     # Spawn the player on a fixed tile
     player = Player('Player.png', 960, 540)  # Example fixed position
     other_players = pygame.sprite.Group()
+
+    pygame.mixer.music.load('Free 12 Tracks Pixel RPG Game Music Pack (No Copyright).mp3')
+    pygame.mixer.music.play()
+
     # get other player position
     with grpc.insecure_channel(Global.IP) as channel:
         stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
