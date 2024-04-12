@@ -116,7 +116,7 @@ def play(screen, tmx_data):
     for _ in range(10):  # Spawn 10 monsters
         x = random.randint(0, tmx_data.width * tmx_data.tilewidth)
         y = random.randint(0, tmx_data.height * tmx_data.tileheight)
-        i = random.randint(1, 5)
+        i = random.randint(1, 4)
         if i == 1:
             monster = Monster('monstre1.png', x, y)
         if i == 2:
