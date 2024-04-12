@@ -1,3 +1,4 @@
+import os
 import random
 
 import grpc
@@ -106,8 +107,6 @@ def play(screen, tmx_data):
     player = Player('Player.png', 960, 540)  # Example fixed position
     other_players = pygame.sprite.Group()
 
-    pygame.mixer.music.load('Free 12 Tracks Pixel RPG Game Music Pack (No Copyright).mp3')
-    pygame.mixer.music.play()
 
     # get other player position
     with grpc.insecure_channel(Global.IP) as channel:
@@ -140,13 +139,28 @@ def play(screen, tmx_data):
     import threading
     running = True
 
+    def play_music():
+        # choose a random music from music folder
+        music = random.choice(os.listdir('music'))
+        pygame.mixer.music.load(f'music/{music}')
+        pygame.mixer.music.play()
+        # wait for the music to finish
+        while pygame.mixer.music.get_busy():
+            pass
+        # play another music
+        play_music()
+
+    # Create a new thread and start it
+    thread = threading.Thread(target=play_music)
+    thread.start()
+
     def get_other_players():
         other_players.empty()
         while running:
             with grpc.insecure_channel(Global.IP) as channel:
                 stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
                 response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
-            print(response)
+            #print(response)
             # remove from the list the player that is currently playing (with the same id as the current player)
             for player in response.pos:
                 if player.user_id == Global.ID:
