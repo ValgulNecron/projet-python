@@ -268,4 +268,6 @@ def play(screen, tmx_data):
             compteur = 0
 
     pygame.quit()
+    Global.player_movement_x_for_other_players = 0
+    Global.player_movement_y_for_other_players = 0
 
