@@ -150,21 +150,15 @@ def play(screen, tmx_data):
                     already_in_list = False
                     for other_player in other_players:
                         if other_player.id == player.user_id:
-                            pos = player.pos
                             already_in_list = True
+                            pos = player.pos
                             other_player.move(pos.pos_x, pos.pos_y)
                             break
                     if not already_in_list:
                         pos = player.pos
                         player2 = OtherPlayer('Player.png', pos.pos_x, pos.pos_y, player.user_id)
                         other_players.add(player2)
-                    else:
-                        # update the position of the player
-                        for other_player in other_players:
-                            if other_player.id == player.user_id:
-                                pos = player.pos
-                                other_player.move(pos.pos_x, pos.pos_y)
-                                break
+
             # make the thread sleep for 1 second
             player_x_movement_for_other = 0
             player_y_movement_for_other = 0
