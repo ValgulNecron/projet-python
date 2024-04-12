@@ -143,6 +143,7 @@ def play(screen, tmx_data):
         # choose a random music from music folder
         music = random.choice(os.listdir('music'))
         pygame.mixer.music.load(f'music/{music}')
+        pygame.mixer.music.set_volume(0.1)
         pygame.mixer.music.play()
         # wait for the music to finish
         while pygame.mixer.music.get_busy():
