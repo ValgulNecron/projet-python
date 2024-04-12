@@ -98,7 +98,7 @@ def play(screen, tmx_data):
         def move(self, new_x, new_y, player_x_movement=0, player_y_movement=0):
             self.rect.x = new_x - player_x_movement
             self.rect.y = new_y - player_y_movement
-            print(self.rect.x, self.rect.y)
+            #print(self.rect.x, self.rect.y)
 
 
     # ... rest of the class ...
