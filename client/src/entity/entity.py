@@ -117,9 +117,10 @@ def play(screen, tmx_data):
             with grpc.insecure_channel(Global.IP) as channel:
                 stub = player_pos_pb2_grpc.PlayerPosServiceStub(channel)
                 response = stub.PlayerGetAllPos(player_pos_pb2.GetPosRequest(user_id=Global.ID, token=Global.TOKEN))
+            print(response)
             for pos in response.pos:
                 pos = pos.pos
-                player2 = Player('Player.png', pos.pos_x, pos.pos_y)
+                player2 = Monster('Player.png', pos.pos_x, pos.pos_y)
                 other_player.add(player2)
             # make the thread sleep for 1 second
             threading.Event().wait(10)
@@ -148,6 +149,7 @@ def play(screen, tmx_data):
         collision_objects = []
 
         # draw other player
+
         for player in other_player:
             player.draw(screen)
 
@@ -227,8 +229,6 @@ def play(screen, tmx_data):
             thread = threading.Thread(target=update_pos, args=(player_x, player_y))
             thread.start()
             compteur = 0
-
-
 
     pygame.quit()
 
