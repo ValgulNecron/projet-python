@@ -98,11 +98,12 @@ def play(screen, tmx_data):
         def move(self, new_x, new_y, player_x_movement=0, player_y_movement=0):
             self.rect.x = new_x - player_x_movement
             self.rect.y = new_y - player_y_movement
+            print(self.rect.x, self.rect.y)
 
 
     # ... rest of the class ...
     # Spawn the player on a fixed tile
-    player = Player('Player.png', 400, 300)  # Example fixed position
+    player = Player('Player.png', 960, 540)  # Example fixed position
     other_players = pygame.sprite.Group()
     # get other player position
     with grpc.insecure_channel(Global.IP) as channel:
