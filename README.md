@@ -1,2 +1,3 @@
 # projet-python
-projet de math en python
+
+Small python project to make a pygame mmo with a rust grpc server.
